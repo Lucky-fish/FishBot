@@ -50,8 +50,8 @@ const roleSpawn = {
             }
         }*/
 
-        if (builderLength < 4) {
-            var result = spawn.createCreep([WORK, CARRY, MOVE, CARRY, MOVE, CARRY, MOVE, CARRY, MOVE], "fishbot.builder-" + Math.ceil(Math.random() * 10000), {role: "builder"});
+        if (builderLength < 1) {
+            var result = spawn.createCreep(this.getBuilderBody(spawn), "fishbot.builder-" + Math.ceil(Math.random() * 10000), {role: "builder"});
             if ((result instanceof String)) {
                 spawned = "builder";
             }
@@ -85,7 +85,7 @@ const roleSpawn = {
         const energy = spawn.room.energyCapacityAvailable - BODYPART_COST[WORK];
         const body = [WORK];
 
-        const unit = BODYPART_COST[MOVE] + BODYPART_COST[CARRY];
+        const unit = this.getBodyCost([MOVE, CARRY]);
 
         for (let i = 0; i < Math.floor(energy / unit); i++) {
             body.push(MOVE, CARRY);
@@ -97,13 +97,31 @@ const roleSpawn = {
         const energy = spawn.room.energyCapacityAvailable - BODYPART_COST[CARRY] - BODYPART_COST[MOVE];
         const body = [CARRY, MOVE];
 
-        const unit = BODYPART_COST[WORK];
+        const unit = this.getBodyCost([WORK]);
 
         for (let i = 0; i < Math.floor(energy / unit); i++) {
             body.push(WORK);
         }
 
         return body;
+    },
+    getBuilderBody : function (spawn) {
+        const energy = spawn.room.energyCapacityAvailable;
+
+        const body = [];
+        const unit = this.getBodyCost([MOVE, CARRY, WORK]);
+
+        for (let i = 0; i < Math.floor(energy / unit); i ++) {
+            body.push(WORK, CARRY, MOVE);
+        }
+
+    },
+    getBodyCost : function(parts) {
+        var cost = 0;
+        for (var i in parts) {
+            cost += BODYPART_COST[parts[i]];
+        }
+        return cost;
     }
 };
 
