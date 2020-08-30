@@ -115,6 +115,7 @@ const roleSpawn = {
             body.push(WORK, CARRY, MOVE);
         }
 
+        return body;
     },
     getBodyCost : function(parts) {
         var cost = 0;
