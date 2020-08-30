@@ -10,7 +10,7 @@
 const utils = require("utils");
 const resourceFinding = {
     normalFinding: function (creep) {
-        const containers = creep.room.find(FIND_STRUCTURES, {filter: (a) => (a.structureType === STRUCTURE_CONTAINER || a.structureType === STRUCTURE_STORAGE) && a.store[RESOURCE_ENERGY] > 0});
+        const containers = creep.room.find(FIND_STRUCTURES, {filter: (a) => (a.structureType === STRUCTURE_CONTAINER || a.structureType === STRUCTURE_STORAGE) && a.store[RESOURCE_ENERGY] > creep.store.getFreeCapacity()});
 
         let cs = null;
         if (containers.length) {
