@@ -58,7 +58,7 @@ const roleSpawn = {
         }
 
         if (upgraderLength < 1) {
-            var result = spawn.createCreep([WORK, CARRY, MOVE, CARRY, MOVE], "fishbot.upgrader-" + Math.ceil(Math.random() * 10000), {role: "upgrader"});
+            var result = spawn.createCreep(this.getUpgraderBody(spawn), "fishbot.upgrader-" + Math.ceil(Math.random() * 10000), {role: "upgrader"});
             if ((result instanceof String)) {
                 spawned = "upgrader";
             }
