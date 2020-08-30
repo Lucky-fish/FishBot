@@ -122,7 +122,7 @@ const roleSpawn = {
         const body = [];
         const unit = this.getBodyCost([MOVE, CARRY, WORK, MOVE, CARRY]);
         for (let i = 0; i < Math.floor(energy / unit); i ++) {
-            body.push([MOVE, CARRY, WORK, MOVE, CARRY]);
+            body.push(MOVE, CARRY, WORK, MOVE, CARRY);
         }
         return body;
     },
