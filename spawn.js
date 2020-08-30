@@ -82,7 +82,7 @@ const roleSpawn = {
         }
     },
     getFeederBody: function (spawn) {
-        const energy = spawn.room.energyCapacityAvailable - BODYPART_COST[WORK];
+        const energy = spawn.room.energyCapacityAvailable - this.getBodyCost([WORK]);
         const body = [WORK];
 
         const unit = this.getBodyCost([MOVE, CARRY]);
@@ -94,7 +94,7 @@ const roleSpawn = {
         return body;
     },
     getHarvesterBody: function (spawn) {
-        const energy = spawn.room.energyCapacityAvailable - BODYPART_COST[CARRY] - BODYPART_COST[MOVE];
+        const energy = spawn.room.energyCapacityAvailable - this.getBodyCost([CARRY, MOVE]);
         const body = [CARRY, MOVE];
 
         const unit = this.getBodyCost([WORK]);
@@ -116,6 +116,14 @@ const roleSpawn = {
         }
 
         return body;
+    },
+    getUpgraderBody : function (spawn) {
+        const energy = spawn.room.energyCapacityAvailable;
+        const body = [];
+        const unit = this.getBodyCost([MOVE, CARRY, WORK, MOVE, CARRY]);
+        for (let i = 0; i < Math.floor(energy / unit); i ++) {
+            body.push([MOVE, CARRY, WORK, MOVE, CARRY]);
+        }
     },
     getBodyCost : function(parts) {
         var cost = 0;
