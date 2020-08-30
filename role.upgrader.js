@@ -13,8 +13,14 @@ const roleUpgrader = {
         }
 
         if (creep.memory.a) {
-            if (creep.upgradeController(creep.room.controller) === ERR_NOT_IN_RANGE) {
+            const controller = creep.room.controller;
+            if (creep.upgradeController(controller) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(creep.room.controller);
+            }
+            if ((!controller.sign) || (controller.sign.username !== "Death_fish")) {
+                if (creep.signController(controller, "喵") === ERR_NOT_IN_RANGE) {
+                    creep.moveTo(creep.room.controller);
+                }
             }
         } else {
             lookForSource.harvest(creep);
