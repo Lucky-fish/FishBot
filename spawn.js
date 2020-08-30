@@ -18,7 +18,7 @@ const roleSpawn = {
         const storageFixerLength = _.filter(Game.creeps, (creep) => creep.memory.role === "fixer->storage").length;
         const harvesterLength = _.filter(Game.creeps, (creep) => creep.memory.role === 'harvester').length;
 
-        const containerLength = Math.min(spawn.room.find(FIND_SOURCES).length, spawn.room.find(FIND_STRUCTURES, {filter: (e) => ((e.structureType === STRUCTURE_STORAGE && e.my) || e.structureType === STRUCTURE_CONTAINER) && e.hits < e.hitsMax / (e.store[RESOURCE_ENERGY] < e.storeCapacity / 2 ? 2 : 1)}));
+        const containerLength = Math.min(spawn.room.find(FIND_SOURCES).length, spawn.room.find(FIND_STRUCTURES, {filter: (e) => ((e.structureType === STRUCTURE_STORAGE && e.my) || e.structureType === STRUCTURE_CONTAINER)}));
 
         let spawned = null;
 
