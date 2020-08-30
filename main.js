@@ -52,7 +52,7 @@ module.exports.loop = function () {
             rolePicker.run(creep);
         } else if (creep.memory.role === "attacker") {
             roleAttacker.run(creep);
-        } else if (creep.memory.role === "fixer->storage") {
+        } else if (creep.memory.role == "fixer->storage") {
             roleFixerStorage.run(creep);
         } else if (creep.memory.role === 'feeder') {
             roleFeeder.run(creep);
