@@ -32,7 +32,7 @@ module.exports = {
 	           roleHarvester.run(creep);
 	        }
 	    } else {
-			const source = lookForSource.lockFinding(creep);
+			const source = lookForSource.normalFinding(creep);
 			if(creep.harvest(source) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(source);
             }
