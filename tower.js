@@ -22,20 +22,21 @@ const tower = {
             tower.heal(damagedCreep);
         }
 
-        // var damagedStructure = tower.pos.findClosestByRange(FIND_MY_STRUCTURES, {filter : (structure) => structure.hits < structure.hitsMax});
-        const broken = tower.room.find(FIND_STRUCTURES, {filter: (e) => (e.hits < e.hitsMax && (e.structureType === STRUCTURE_WALL || e.my)) || (e.structureType === STRUCTURE_RAMPART)});
+        if (tower.store[RESOURCE_ENERGY] > tower.store.getCapacity() / 2) {
+            const broken = tower.room.find(FIND_STRUCTURES, {filter: (e) => (e.hits < e.hitsMax && (e.structureType === STRUCTURE_WALL || e.my)) || (e.structureType === STRUCTURE_RAMPART)});
 
-        broken.sort(function (a, b) {
-            if (b.structureType === STRUCTURE_RAMPART && b.hits < 400) {
-                return 1;
+            broken.sort(function (a, b) {
+                if (b.structureType === STRUCTURE_RAMPART && b.hits < 400) {
+                    return 1;
+                }
+                if (a.structureType === STRUCTURE_RAMPART && a.hits < 400) {
+                    return -1;
+                }
+                return a.hits - b.hits;
+            });
+            if (broken.length) {
+                tower.repair(broken[0]);
             }
-            if (a.structureType === STRUCTURE_RAMPART && a.hits < 400) {
-                return -1;
-            }
-            return a.hits - b.hits;
-        });
-        if (broken.length) {
-            tower.repair(broken[0]);
         }
     }
 };
