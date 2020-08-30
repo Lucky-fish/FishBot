@@ -12,17 +12,18 @@ const resourceFinding = {
     normalFinding: function (creep) {
         const containers = creep.room.find(FIND_STRUCTURES, {filter: (a) => (a.structureType === STRUCTURE_CONTAINER || a.structureType === STRUCTURE_STORAGE) && a.store[RESOURCE_ENERGY] > creep.store.getFreeCapacity()});
 
-        // let cs = null;
+        let cs = null;
         if (containers.length) {
             for (var i in containers) {
                 const c = containers[i];
-                // if (c.store && (cs == null || c.store[RESOURCE_ENERGY] > cs.store[RESOURCE_ENERGY])) {
-                //     if (!cs || (Math.abs(c.store[RESOURCE_ENERGY] - cs.store[RESOURCE_ENERGY]) > 100)) {
-                //         cs = c;
-                //     }
-                // }
-                return c;
+                if (c.store && (cs == null || c.store[RESOURCE_ENERGY] > cs.store[RESOURCE_ENERGY])) {
+                    if (!cs || (Math.abs(c.store[RESOURCE_ENERGY] - cs.store[RESOURCE_ENERGY]) > 100)) {
+                        cs = c;
+                    }
+                }
+
             }
+            return cs;
         }
 
         const sources = creep.room.find(FIND_SOURCES);
