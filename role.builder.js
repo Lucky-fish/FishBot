@@ -1,4 +1,4 @@
-const roleUpgrader = require("role.fixer");
+const roleUpgrader = require("role.upgrader");
 const lookForSource = require("lookforsource");
 const utils = require("utils");
 
