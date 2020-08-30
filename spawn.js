@@ -36,7 +36,7 @@ const roleSpawn = {
             }
         }
 
-        if (fixerLength < 3) {
+        if (fixerLength < 1) {
             var result = spawn.createCreep([WORK, CARRY, MOVE, CARRY, MOVE, CARRY, MOVE], "fishbot.fixer-" + Math.ceil(Math.random() * 10000), {role: "fixer"});
             if ((result instanceof String)) {
                 spawned = "fixer";
