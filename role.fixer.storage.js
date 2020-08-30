@@ -21,8 +21,7 @@ module.exports = {
 	    }
 	    
 	    if (creep.memory.a) {
-			const broken = creep.pos.findInRange(FIND_STRUCTURES, 2, {filter: (e) => ((e.structureType === STRUCTURE_STORAGE && e.my) || e.structureType === STRUCTURE_CONTAINER) && e.hits < e.hitsMax});
-
+			const broken = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (e) => ((e.structureType === STRUCTURE_STORAGE && e.my) || e.structureType === STRUCTURE_CONTAINER) && e.hits < e.hitsMax});
 
 			if (broken) {
 	            if (creep.repair(broken) === ERR_NOT_IN_RANGE) {
