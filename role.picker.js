@@ -6,12 +6,12 @@
  * var mod = require('role.picker');
  * mod.thing == 'a thing'; // true
  */
-var harvester = require("role.fixer");
+const harvester = require("role.fixer");
 module.exports = {
     run : function(creep) {
-        var dropped = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
+        const dropped = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
         if (dropped && creep.carry.energy < creep.carryCapacity) {
-            if (creep.pickup(dropped) == ERR_NOT_IN_RANGE) {
+            if (creep.pickup(dropped) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(dropped);
             }
         } else {

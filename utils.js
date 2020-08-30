@@ -10,7 +10,7 @@
 module.exports = {
     distance : function(pos1, pos2) {
         if ((pos1 instanceof RoomPosition) && (pos2 instanceof RoomPosition)) {
-            if (pos1.roomName != pos2.roomName) {
+            if (pos1.roomName !== pos2.roomName) {
                 return Infinity;
             }
             

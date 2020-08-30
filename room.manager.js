@@ -7,15 +7,15 @@
  * mod.thing == 'a thing'; // true
  */
 
-var allowedRoom = ["W26S71"];
+const allowedRoom = ["W26S71"];
 
 module.exports = {
     // escape from other's room
     backToMainRoom : function(creep) {
-        
-        var contains = false;
-        for (var i in allowedRoom) {
-            if (creep.room.name == allowedRoom[i]) {
+
+        let contains = false;
+        for (let i in allowedRoom) {
+            if (creep.room.name === allowedRoom[i]) {
                 contains = true;
                 break;
             }
@@ -25,8 +25,8 @@ module.exports = {
             return false;
         }
         creep.move(TOP);
-        var exitDir = Game.map.findExit(creep.room, "W26S71");
-        var exit = creep.pos.findClosestByRange(exitDir);
+        const exitDir = Game.map.findExit(creep.room, "W26S71");
+        const exit = creep.pos.findClosestByRange(exitDir);
         creep.moveTo(exit);
         
         return true;

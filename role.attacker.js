@@ -9,28 +9,28 @@
 
 module.exports = {
     run : function(creep) {
-        var exe = false;
-        var invader = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+        let exe = false;
+        const invader = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
         if (invader) {
-            if (creep.body.indexOf(ATTACK) != -1) {
-                if (creep.attack(invader) == ERR_NOT_IN_RANGE) {
+            if (creep.body.indexOf(ATTACK) !== -1) {
+                if (creep.attack(invader) === ERR_NOT_IN_RANGE) {
                     creep.moveTo(invader);
                 }
                 exe = true;
             }
-            if (creep.body.indexOf(RANGED_ATTACK) != -1) {
-                if (creep.rangedAttack(invader) == ERR_NOT_IN_RANGE) {
+            if (creep.body.indexOf(RANGED_ATTACK) !== -1) {
+                if (creep.rangedAttack(invader) === ERR_NOT_IN_RANGE) {
                     creep.moveTo(invader);
                 }
                 exe = true;
             }
         }
         
-        if (creep.body.indexOf(HEAL) != -1) {
-            var damagedCreep = _.filter(Game.creeps, (creep) => creep.hits < creep.hitsMax);
+        if (creep.body.indexOf(HEAL) !== -1) {
+            const damagedCreep = _.filter(Game.creeps, (creep) => creep.hits < creep.hitsMax);
             damagedCreep.sort((a, b) => a.hits - b.hits);
             
-            if (creep.heal(damagedCreep[0]) == ERR_NOT_IN_RANGE) {
+            if (creep.heal(damagedCreep[0]) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(damagedCreep[0]);
             }
             exe = true;
