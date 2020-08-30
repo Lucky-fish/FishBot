@@ -7,7 +7,7 @@
  * mod.thing == 'a thing'; // true
  */
 
-const roleHarvester = require("role.harvester");
+const roleUpgrader = require("role.upgrader");
 const lookForSource = require("lookforsource");
 const utils = require("utils");
 
@@ -28,7 +28,7 @@ module.exports = {
 	                creep.moveTo(broken);
 	            }
 	        } else {
-	           roleHarvester.run(creep);
+	           roleUpgrader.run(creep);
 	        }
 	    } else {
 			lookForSource.harvest(creep);
