@@ -79,7 +79,9 @@ const resourceFinding = {
                 delete creep.memory.s;
             }
         } else if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
-            creep.moveTo(source);
+            if (creep.moveTo(source)) {
+                delete creep.memory.s;
+            }
         } else {
             delete creep.memory.s;
         }
