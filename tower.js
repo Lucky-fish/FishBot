@@ -33,8 +33,9 @@ const tower = {
                 if (tower.room.memory.fixTimer > 10 || target.hits >= target.hitsMax) {
                     delete tower.room.memory.fixing;
                     delete tower.room.memory.fixTimer;
+                } else {
+                    return;
                 }
-                return;
             }
 
             const broken = tower.room.find(FIND_STRUCTURES, {filter: (e) => (e.hits < e.hitsMax && (e.structureType === STRUCTURE_WALL || e.my || e.structureType === STRUCTURE_ROAD)) || (e.structureType === STRUCTURE_RAMPART)});
