@@ -6,7 +6,7 @@
  * var mod = require('role.miner');
  * mod.thing == 'a thing'; // true
  */
-const lookForSource = require("lookforsource");
+const lookForSource = require("resource");
 module.exports = {
     run : function(creep) {
         const source = lookForSource.lockFinding(creep);

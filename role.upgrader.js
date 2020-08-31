@@ -1,4 +1,4 @@
-const lookForSource = require("lookforsource");
+const lookForSource = require("resource");
 
 const roleUpgrader = {
 

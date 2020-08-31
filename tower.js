@@ -25,6 +25,17 @@ const tower = {
         }
 
         if (tower.store[RESOURCE_ENERGY] > tower.store.getCapacity(RESOURCE_ENERGY) / 2 && (!exe)) {
+            if (tower.room.memory.fixing) {
+                const target = Game.getObjectById(tower.room.memory.fixing);
+                tower.repair(target);
+                tower.room.memory.fixTimer ++;
+
+                if (tower.room.memory.fixTimer > 10 || target.hits >= target.hitsMax) {
+                    delete tower.room.memory.fixing;
+                    delete tower.room.memory.fixTimer;
+                }
+            }
+
             const broken = tower.room.find(FIND_STRUCTURES, {filter: (e) => (e.hits < e.hitsMax && (e.structureType === STRUCTURE_WALL || e.my || e.structureType === STRUCTURE_ROAD)) || (e.structureType === STRUCTURE_RAMPART)});
 
             broken.sort(function (a, b) {
@@ -38,6 +49,8 @@ const tower = {
             });
             if (broken.length) {
                 tower.repair(broken[0]);
+                tower.room.memory.fixing = broken[0].id;
+                tower.room.memory.fixTimer = 0;
             }
         }
     }

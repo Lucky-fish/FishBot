@@ -1,5 +1,5 @@
 const roleBuilder = require("role.builder");
-const lookForSource = require("lookforsource");
+const lookForSource = require("resource");
 const roleFeeder = {
     /** @param {Creep} creep **/
     run: function (creep) {

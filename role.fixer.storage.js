@@ -8,7 +8,7 @@
  */
 
 const roleUpgrader = require("role.upgrader");
-const lookForSource = require("lookforsource");
+const lookForSource = require("resource");
 const utils = require("utils");
 
 module.exports = {
