@@ -12,7 +12,12 @@ module.exports = {
 	    
 	    if (creep.memory.a) {
 	    	if (creep.memory.fixing) {
-	    		this.repair(creep, Game.getObjectById(creep.memory.fixing));
+	    		const target = Game.getObjectById(creep.memory.fixing);
+	    		if (target) {
+					this.repair(creep, target);
+				} else {
+	    			creep.memory.fixTimer = 20;
+				}
 
 	    		if (creep.memory.fixTimer >= 10) {
 	    			delete creep.memory.fixing;
