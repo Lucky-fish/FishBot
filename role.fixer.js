@@ -18,6 +18,7 @@ module.exports = {
 	    			delete creep.memory.fixing;
 	    			delete creep.memory.fixTimer;
 				}
+	    		return;
 			}
 
 			const broken = creep.room.find(FIND_STRUCTURES, {
