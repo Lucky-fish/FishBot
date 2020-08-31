@@ -70,7 +70,8 @@ module.exports = {
         }
     },
 	repair : function(creep, target) {
-    	if (creep.repair(target) === ERR_NOT_IN_RANGE) {
+    	const result = creep.repair(target);
+    	if (result === ERR_NOT_IN_RANGE) {
     		creep.moveTo(target);
 		}
     	creep.memory.fixing = target.id;
@@ -78,7 +79,7 @@ module.exports = {
     		creep.memory.fixTimer = 1;
 		} else if (target.hits > target.hitsMax) {
     		creep.memory.fixTimer = 20;
-		} else {
+		} else if (result === OK) {
     		creep.memory.fixTimer ++;
 		}
 	}
