@@ -24,7 +24,7 @@ module.exports = {
 	                return -1;
 	            }
 	            if (b.structureType === STRUCTURE_ROAD && b.hits < 1000) {
-	                return -1;
+	                return 1;
 	            }
 	            return a.hits - b.hits;
 	        });

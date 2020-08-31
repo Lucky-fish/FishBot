@@ -25,7 +25,7 @@ const tower = {
         }
 
         if (tower.store[RESOURCE_ENERGY] > tower.store.getCapacity(RESOURCE_ENERGY) / 2 && (!exe)) {
-            const broken = tower.room.find(FIND_STRUCTURES, {filter: (e) => (e.hits < e.hitsMax && (e.structureType === STRUCTURE_WALL || e.my)) || (e.structureType === STRUCTURE_RAMPART)});
+            const broken = tower.room.find(FIND_STRUCTURES, {filter: (e) => (e.hits < e.hitsMax && (e.structureType === STRUCTURE_WALL || e.my || e.structureType === STRUCTURE_ROAD)) || (e.structureType === STRUCTURE_RAMPART)});
 
             broken.sort(function (a, b) {
                 if (b.structureType === STRUCTURE_RAMPART && b.hits < 400) {
