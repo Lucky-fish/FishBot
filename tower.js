@@ -22,7 +22,7 @@ const tower = {
             tower.heal(damagedCreep);
         }
 
-        if (tower.store[RESOURCE_ENERGY] > tower.store.getCapacity() / 2) {
+        if (tower.store[RESOURCE_ENERGY] > tower.store.getCapacity(RESOURCE_ENERGY) / 2) {
             const broken = tower.room.find(FIND_STRUCTURES, {filter: (e) => (e.hits < e.hitsMax && (e.structureType === STRUCTURE_WALL || e.my)) || (e.structureType === STRUCTURE_RAMPART)});
 
             broken.sort(function (a, b) {
