@@ -11,18 +11,20 @@ const tower = {
         if (tower.structureType !== STRUCTURE_TOWER) {
             return;
         }
-
+        let exe = false;
         const enemy = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
         if (enemy) {
             tower.attack(enemy);
+            exe = true;
         }
 
         const damagedCreep = tower.pos.findClosestByRange(FIND_MY_CREEPS, {filter: (creep) => creep.hits < creep.hitsMax});
         if (damagedCreep) {
             tower.heal(damagedCreep);
+            exe = true;
         }
 
-        if (tower.store[RESOURCE_ENERGY] > tower.store.getCapacity(RESOURCE_ENERGY) / 2) {
+        if (tower.store[RESOURCE_ENERGY] > tower.store.getCapacity(RESOURCE_ENERGY) / 2 && (!exe)) {
             const broken = tower.room.find(FIND_STRUCTURES, {filter: (e) => (e.hits < e.hitsMax && (e.structureType === STRUCTURE_WALL || e.my)) || (e.structureType === STRUCTURE_RAMPART)});
 
             broken.sort(function (a, b) {
