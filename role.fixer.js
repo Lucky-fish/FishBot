@@ -35,7 +35,7 @@ module.exports = {
 						}
 					}
 
-					return e.hits < e.hitsMax && e.structureType === STRUCTURE_WALL;
+					return e.hits < e.hitsMax && (e.structureType === STRUCTURE_WALL || (e.structureType === STRUCTURE_RAMPART && e.my));
 				}});
 
 			broken.sort(function(a,b) {
