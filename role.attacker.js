@@ -37,7 +37,14 @@ module.exports = {
         }
         
         if (!exe) {
-            creep.moveTo(Game.flags["back"]);
+            // move randomly
+            var x = creep.memory.targetX;
+            var y = creep.memory.targetY;
+
+            if (creep.pos.x == x && creep.pos.z == x || (!x)  || (!y) || creep.moveTo(creep.room.getPositionAt(x, y), { reusePath : 50}) == ERR_NO_PATH) {
+                creep.memory.targetX = Math.floor(Math.random() * 45) + 2;
+                creep.memory.targetY = Math.floor(Math.random() * 45) + 2;
+            }
         }
     }
 };
