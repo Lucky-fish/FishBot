@@ -44,6 +44,9 @@ module.exports.loop = function () {
         if (creep.pos.findInRange(FIND_TOMBSTONES, 4).length) {
             creep.withdraw(creep.pos.findInRange(FIND_TOMBSTONES, 4)[0], RESOURCE_ENERGY);
         }
+        if (creep.pos.findInRange(FIND_RUINS, 4).length) {
+            creep.withdraw(creep.pos.findInRange(FIND_RUINS, 4)[0], RESOURCE_ENERGY);
+        }
         if(creep.memory.role === 'harvester') {
             roleHarvester.run(creep);
         } else if(creep.memory.role === 'upgrader') {
