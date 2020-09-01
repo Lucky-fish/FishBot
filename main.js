@@ -19,11 +19,16 @@ module.exports.loop = function () {
         Game.cpu.generatePixel();
     }
 
-    for (var i in Game.spawns) {
-        roleSpawn.run(Game.spawns[i]);
+    for (let i in Game.spawns) {
+        const spawn = Game.spawns[i];
+        roleSpawn.run(spawn);
+
+        if (spawn.room.find(FIND_HOSTILE_CREEPS).length > 2 && (!spawn.room.controller.safeMode)) { // it seems that there is raid taken place here
+            spawn.room.controller.activateSafeMode();
+        }
     }
 
-    for (var i in Memory.creeps) {
+    for (let i in Memory.creeps) {
         if (!Game.creeps[i]) {
             const mem = Memory.creeps[i];
             if (mem.role === "claimer" && mem.reserving) {
@@ -33,7 +38,7 @@ module.exports.loop = function () {
         }
     }
     
-    for (var i in Game.structures) {
+    for (let i in Game.structures) {
         const structure = Game.structures[i];
 
         if (structure.structureType === STRUCTURE_TOWER) {
