@@ -58,7 +58,11 @@ module.exports = {
     findInvisibleOwnRooms : function() {
         return this.getOwnRoom().filter((v, i, a) => !Game.rooms[v]);
     },
-    isMyRoom : function(room) {
+    isClaimableRoom : function(room) {
+        if (Game.rooms[room] && (!Game.rooms[room].controller)) {
+            return true;
+        }
+
         if (room instanceof String) {
             return Memory.ownedRooms.indexOf(room) !== -1;
         } else {

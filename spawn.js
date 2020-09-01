@@ -13,6 +13,20 @@ const roleSpawn = {
             return;
         }
 
+        if (!spawn.memory.tasks) {
+            spawn.memory.tasks = [];
+        }
+        if (spawn.memory.tasks.length) {
+            const task = spawn.memory.tasks[0];
+            let body = task.body;
+            let memory = task.memory;
+
+            if (spawn.createCreep(body, "fishbot-" + Math.ceil(Math.random() * 10000), memory) === OK) {
+                spawn.memory.tasks.shift();
+                return;
+            }
+        }
+
         const feederLength = _.filter(Game.creeps, (creep) => creep.memory.role === 'feeder').length;
         const builderLength = _.filter(Game.creeps, (creep) => creep.memory.role === 'builder').length;
         const upgraderLength = _.filter(Game.creeps, (creep) => creep.memory.role === 'upgrader').length;
@@ -85,6 +99,13 @@ const roleSpawn = {
             console.log("Spawning: " + spawned);
         }
     },
+    putClaimerSpawnTask : function(memory, bodyFetch) {
+        for (let i in Game.spawns) {
+            const spawn = Game.spawns[i];
+            spawn.memory.tasks.push({body : bodyFetch(spawn), memory : memory});
+            return;
+        }
+    },
     getFeederBody: function (spawn) {
         const energy = spawn.room.energyCapacityAvailable - this.getBodyCost([WORK]);
         const body = [WORK];
@@ -127,6 +148,15 @@ const roleSpawn = {
         const unit = this.getBodyCost([MOVE, CARRY, WORK, MOVE, CARRY]);
         for (let i = 0; i < Math.floor(energy / unit); i ++) {
             body.push(MOVE, CARRY, WORK, MOVE, CARRY);
+        }
+        return body;
+    },
+    getClaimerBody : function(spawn) {
+        const energy = spawn.room.energyCapacityAvailable;
+        const body = [];
+        const unit = this.getBodyCost([MOVE, CLAIM, CLAIM]);
+        for (let i = 0; i < Math.floor(energy / unit); i ++) {
+            body.push(WORK, CLAIM, CLAIM);
         }
         return body;
     },

@@ -6,6 +6,7 @@ const rolePicker = require('role.picker');
 const roleAttacker = require('role.attacker');
 const roleFixerStorage = require("role.fixer.storage");
 const roleFeeder = require('role.feeder');
+const roleClaimer = require('role.claimer');
 
 const roleSpawn = require('spawn');
 
@@ -14,7 +15,7 @@ const tower = require("tower");
 const roomManager = require('room.manager');
 
 module.exports.loop = function () {
-    if (Game.cpu.bucket == 10000) {
+    if (Game.cpu.bucket === 10000) {
         Game.cpu.generatePixel();
     }
 
@@ -24,6 +25,10 @@ module.exports.loop = function () {
 
     for (var i in Memory.creeps) {
         if (!Game.creeps[i]) {
+            const mem = Memory.creeps[i];
+            if (mem.role === "claimer" && mem.reserving) {
+                roleSpawn.putClaimerSpawnTask({role : "claimer", reserving : true, targetRoomName : mem.targetRoomName}, (spawn) => roleSpawn.getClaimerBody(spawn));
+            }
             delete Memory.creeps[i];
         }
     }
@@ -53,14 +58,16 @@ module.exports.loop = function () {
             roleUpgrader.run(creep);
         } else if(creep.memory.role === 'builder') {
             roleBuilder.run(creep);
-        } else if (creep.memory.role === 'fixer' || creep.memory.role == 'repairer') {
+        } else if (creep.memory.role === 'fixer' || creep.memory.role === 'repairer') {
             roleRepairer.run(creep);
         } else if (creep.memory.role === "picker") {
             rolePicker.run(creep);
         } else if (creep.memory.role === "attacker") {
             roleAttacker.run(creep);
-        } else if (creep.memory.role == "fixer->storage") {
+        } else if (creep.memory.role === "fixer->storage") {
             roleFixerStorage.run(creep);
+        } else if (creep.memory.role === "claimer") {
+            roleClaimer.run(creep);
         } else if (creep.memory.role === 'feeder') {
             roleFeeder.run(creep);
         } else {

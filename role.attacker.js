@@ -36,10 +36,18 @@ module.exports = {
         
         if (!exe) {
             // move randomly
-            var x = creep.memory.targetX;
-            var y = creep.memory.targetY;
+            const x = creep.memory.targetX;
+            const y = creep.memory.targetY;
 
-            if ((Math.abs(creep.pos.x - x) < 1 && Math.abs(creep.pos.y - y) < 1) || (!x)  || (!y) || creep.moveTo(creep.room.getPositionAt(x, y), { reusePath : 50}) == ERR_NO_PATH) {
+            let success = false;
+            if (x && y) {
+                const result = creep.moveTo(x, y);
+                if (result == OK || result == ERR_TIRED) {
+                    success = true;
+                }
+            }
+
+            if ((Math.abs(creep.pos.x - x) < 1 && Math.abs(creep.pos.y - y) < 1) || (!success)) {
                 creep.memory.targetX = Math.floor(Math.random() * 45) + 2;
                 creep.memory.targetY = Math.floor(Math.random() * 45) + 2;
             }
