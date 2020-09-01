@@ -41,6 +41,11 @@ const claimer = {
                     creep.moveTo(controller);
                     creep.memory.finished = true;
                 }
+                if ((!controller.sign) || (controller.sign.username !== "Death_fish")) {
+                    if (creep.signController(controller, "喵") === ERR_NOT_IN_RANGE) {
+                        creep.moveTo(controller);
+                    }
+                }
             }
         }
     },
