@@ -7,6 +7,8 @@
  * mod.thing == 'a thing'; // true
  */
 
+const maxEnergyUse = 800;
+
 const roleSpawn = {
     run: function (spawn) {
         if (spawn.spawning) {
@@ -106,8 +108,11 @@ const roleSpawn = {
             return;
         }
     },
+    getAvailableEnergy : function (spawn) {
+        return Math.min(maxEnergyUse, spawn.room.energyCapacityAvailable)
+    },
     getFeederBody: function (spawn) {
-        const energy = spawn.room.energyCapacityAvailable - this.getBodyCost([WORK]);
+        const energy = this.getAvailableEnergy(spawn) - this.getBodyCost([WORK]);
         const body = [WORK];
 
         const unit = this.getBodyCost([MOVE, CARRY]);
@@ -119,7 +124,7 @@ const roleSpawn = {
         return body;
     },
     getHarvesterBody: function (spawn) {
-        const energy = spawn.room.energyCapacityAvailable - this.getBodyCost([CARRY, MOVE]);
+        const energy = this.getAvailableEnergy(spawn) - this.getBodyCost([CARRY, MOVE]);
         const body = [CARRY, MOVE];
 
         const unit = this.getBodyCost([WORK]);
@@ -131,7 +136,7 @@ const roleSpawn = {
         return body;
     },
     getBuilderBody : function (spawn) {
-        const energy = spawn.room.energyCapacityAvailable;
+        const energy = this.getAvailableEnergy(spawn);
 
         const body = [];
         const unit = this.getBodyCost([MOVE, CARRY, WORK]);
@@ -143,7 +148,7 @@ const roleSpawn = {
         return body;
     },
     getUpgraderBody : function (spawn) {
-        const energy = spawn.room.energyCapacityAvailable;
+        const energy = this.getAvailableEnergy(spawn);
         const body = [];
         const unit = this.getBodyCost([MOVE, CARRY, WORK, MOVE, CARRY]);
         for (let i = 0; i < Math.floor(energy / unit); i ++) {
@@ -161,7 +166,7 @@ const roleSpawn = {
         return body;
     },
     getAttackerBody : function(spawn) {
-        const energy = spawn.room.energyCapacityAvailable;
+        const energy = this.getAvailableEnergy(spawn);
         let available = energy;
         const body = [];
 
