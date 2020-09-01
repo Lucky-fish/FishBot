@@ -37,7 +37,7 @@ const roleSpawn = {
         }
 
         if (repairer < 4) {
-            var result = spawn.createCreep(this.getBuilderBody(spawn), "fishbot.repairer-" + Math.ceil(Math.random() * 10000), {role: "fixer"});
+            var result = spawn.createCreep(this.getBuilderBody(spawn), "fishbot.repairer-" + Math.ceil(Math.random() * 10000), {role: "repairer"});
             if ((result instanceof String)) {
                 spawned = "repairer";
             }
