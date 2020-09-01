@@ -9,6 +9,10 @@
 
 const roleSpawn = {
     run: function (spawn) {
+        if (spawn.spawning) {
+            return;
+        }
+
         const feederLength = _.filter(Game.creeps, (creep) => creep.memory.role === 'feeder').length;
         const builderLength = _.filter(Game.creeps, (creep) => creep.memory.role === 'builder').length;
         const upgraderLength = _.filter(Game.creeps, (creep) => creep.memory.role === 'upgrader').length;
