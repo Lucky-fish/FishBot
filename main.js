@@ -45,7 +45,14 @@ module.exports.loop = function () {
             creep.withdraw(creep.pos.findInRange(FIND_TOMBSTONES, 4)[0], RESOURCE_ENERGY);
         }
         if (creep.pos.findInRange(FIND_RUINS, 4).length) {
-            creep.withdraw(creep.pos.findInRange(FIND_RUINS, 4)[0], RESOURCE_ENERGY);
+            let ruins = creep.pos.findInRange(FIND_RUINS, 4);
+            for (var i in ruins) {
+                var ruin = ruins[i];
+                if (ruin.store[RESOURCE_ENERGY] != 0) {
+                    creep.withdraw(ruin);
+                    break;
+                }
+            }
         }
         if(creep.memory.role === 'harvester') {
             roleHarvester.run(creep);
