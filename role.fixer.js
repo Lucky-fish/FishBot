@@ -5,25 +5,21 @@ module.exports = {
     run : function(creep) {
         if(creep.memory.a && creep.carry.energy === 0) {
             creep.memory.a = false;
+            delete creep.memory.fixing;
 	    }
 	    if(!creep.memory.a && creep.carry.energy === creep.carryCapacity) {
 	        creep.memory.a = true;
 	    }
 	    
 	    if (creep.memory.a) {
+	    	delete creep.memory.fixTimer;
 	    	if (creep.memory.fixing) {
 	    		const target = Game.getObjectById(creep.memory.fixing);
 	    		if (target) {
 					this.repair(creep, target);
-				} else {
-	    			creep.memory.fixTimer = 20;
-				}
-
-	    		if (creep.memory.fixTimer >= 10) {
-	    			delete creep.memory.fixing;
-	    			delete creep.memory.fixTimer;
-				} else {
 					return;
+				} else {
+	    			delete creep.memory.fixing;
 				}
 			}
 
@@ -80,12 +76,8 @@ module.exports = {
     		creep.moveTo(target);
 		}
     	creep.memory.fixing = target.id;
-    	if (!creep.memory.fixTimer) {
-    		creep.memory.fixTimer = 1;
-		} else if (target.hits > target.hitsMax) {
-    		creep.memory.fixTimer = 20;
-		} else if (result === OK) {
-    		creep.memory.fixTimer ++;
+    	if (target.hits >= target.hitsMax) {
+    		delete creep.memory.fixing;
 		}
 	}
 };
