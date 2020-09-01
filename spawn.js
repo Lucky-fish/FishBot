@@ -132,55 +132,49 @@ const roleSpawn = {
     },
     getAttackerBody : function(spawn) {
         const energy = spawn.room.energyCapacityAvailable;
+        let available = energy;
         const body = [];
 
-        let cost = 0;
         let attackParts = 0;
         let toughParts = 0;
         let healParts = 0;
         let rangedParts = 0;
         let total = 0;
-        let deltaCost = 0;
-
-        while (deltaCost < energy * 0.05) {
-            deltaCost += this.getBodyCost([RANGED_ATTACK]);
+        while (available > energy * 0.95) {
+            available -= this.getBodyCost([RANGED_ATTACK]);
             rangedParts ++;
             total ++;
             if (total % 2 == 0) {
-                deltaCost += this.getBodyCost([MOVE]);
+                available -= this.getBodyCost([MOVE]);
             }
         }
-        cost += deltaCost;
-        if (cost < energy) {
-            while (deltaCost < energy * 0.05) {
-                deltaCost += this.getBodyCost([HEAL]);
+        if (available > 0) {
+            while (available > energy * 0.9) {
+                available -= this.getBodyCost([HEAL]);
                 healParts ++;
 
                 total ++;
                 if (total % 2 == 0) {
-                    deltaCost += this.getBodyCost([MOVE]);
+                    available -= this.getBodyCost([MOVE]);
                 }
             }
         }
-        cost += deltaCost;
-        if (cost < energy) {
-            while (deltaCost < energy * 0.25) {
+        if (available > 0) {
+            while (available > energy * 0.65) {
                 attackParts ++;
-                deltaCost += this.getBodyCost([ATTACK]);
+                available -= this.getBodyCost([ATTACK]);
                 total ++;
                 if (total % 2 == 0) {
-                    deltaCost += this.getBodyCost([MOVE]);
+                    available -= this.getBodyCost([MOVE]);
                 }
             }
         }
-        while ((cost + deltaCost) < energy) {
-            cost += deltaCost;
-            deltaCost = 0;
-            deltaCost += this.getBodyCost([TOUGH]);
+        while (available > 0) {
+            available -= this.getBodyCost([TOUGH]);
             toughParts ++;
             total ++;
             if (total % 2 == 0) {
-                deltaCost += this.getBodyCost([MOVE]);
+                available -= this.getBodyCost([MOVE]);
             }
         }
 
