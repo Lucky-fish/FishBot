@@ -38,12 +38,12 @@ module.exports.loop = function () {
 
     for(let name in Game.creeps) {
         const creep = Game.creeps[name];
-        if (creep.pos.findInRange(FIND_DROPPED_RESOURCES, 10).length) {
-            creep.pickup(creep.pos.findInRange(FIND_DROPPED_RESOURCES, 10)[0]);
+        if (creep.pos.findInRange(FIND_DROPPED_RESOURCES, 4).length) {
+            creep.pickup(creep.pos.findInRange(FIND_DROPPED_RESOURCES, 4)[0]);
         }
-        /*if (roomManager.backToMainRoom(creep)) {
-            creep.moveTo(Game.flags["back"]);
-        }*/
+        if (creep.pos.findInRange(FIND_TOMBSTONES, 4).length) {
+            creep.withdraw(creep.pos.findInRange(FIND_TOMBSTONES, 4)[0], RESOURCE_ENERGY);
+        }
         if(creep.memory.role === 'harvester') {
             roleHarvester.run(creep);
         } else if(creep.memory.role === 'upgrader') {
