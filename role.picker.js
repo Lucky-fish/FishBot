@@ -6,7 +6,7 @@
  * var mod = require('role.picker');
  * mod.thing == 'a thing'; // true
  */
-const harvester = require("role.fixer");
+const roleRepairer = require("role.repairer");
 module.exports = {
     run : function(creep) {
         const dropped = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
@@ -15,7 +15,7 @@ module.exports = {
                 creep.moveTo(dropped);
             }
         } else {
-            harvester.run(creep);
+            roleRepairer.run(creep);
         }
     }
 };

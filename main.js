@@ -1,7 +1,7 @@
 const roleHarvester = require('role.harvester');
 const roleUpgrader = require('role.upgrader');
 const roleBuilder = require('role.builder');
-const roleFixer = require('role.fixer');
+const roleRepairer = require('role.repairer');
 const rolePicker = require('role.picker');
 const roleAttacker = require('role.attacker');
 const roleFixerStorage = require("role.fixer.storage");
@@ -60,8 +60,8 @@ module.exports.loop = function () {
             roleUpgrader.run(creep);
         } else if(creep.memory.role === 'builder') {
             roleBuilder.run(creep);
-        } else if (creep.memory.role === 'fixer') {
-            roleFixer.run(creep);
+        } else if (creep.memory.role === 'fixer' || creep.memory.role == 'repairer') {
+            roleRepairer.run(creep);
         } else if (creep.memory.role === "picker") {
             rolePicker.run(creep);
         } else if (creep.memory.role === "attacker") {

@@ -6,29 +6,63 @@
  * var mod = require('room.manager');
  * mod.thing == 'a thing'; // true
  */
-
-const allowedRoom = ["W26S71"];
-
 module.exports = {
-    // escape from other's room
-    backToMainRoom : function(creep) {
-
-        let contains = false;
-        for (let i in allowedRoom) {
-            if (creep.room.name === allowedRoom[i]) {
-                contains = true;
-                break;
+    find : function(findOption, custom) {
+        const rooms = this.getOwnRoom();
+        const targets = [];
+        for (let i in rooms) {
+            const r = Game.rooms[rooms[i]];
+            if (r) {
+                const sourcesInRoom = r.find(findOption, custom);
+                for (let j in sourcesInRoom) {
+                    targets.push(sourcesInRoom[j]);
+                }
             }
         }
-        
-        if (contains) {
-            return false;
+
+        return targets;
+    },
+    getOwnRoom : function() {
+        if (!Memory.ownedRooms) {
+            const ownedRooms = this.findOwnRooms();
+            const ownedRoomNames = [];
+            for (let i in ownedRooms) {
+                const room = ownedRooms[i];
+                ownedRoomNames.push(room);
+            }
+            Memory.ownedRooms = ownedRoomNames;
+        } else {
+            this.cleanRooms();
+            return Memory.ownedRooms;
         }
-        creep.move(TOP);
-        const exitDir = Game.map.findExit(creep.room, "W26S71");
-        const exit = creep.pos.findClosestByRange(exitDir);
-        creep.moveTo(exit);
-        
-        return true;
+    },
+    findOwnRooms : function() {
+        const ownedRooms = [];
+        for (let i in Game.rooms) {
+            const room = Game.rooms[i];
+            if  (room.controller && (room.controller.my || room.controller.reservation.username === "Death_fish")) {
+                ownedRooms.push(room.name);
+            }
+        }
+        return ownedRooms;
+    },
+    cleanRooms : function() {
+        Memory.ownedRooms = Memory.ownedRooms.filter((value, index, array) => {
+            if (!Game.rooms[value]) {
+                return true;
+            } else {
+                return Game.rooms[value].controller && (Game.rooms[value].controller.my || Game.rooms[value].controller.reservation.username === "Death_fish");
+            }
+        });
+    },
+    findInvisibleOwnRooms : function() {
+        return this.getOwnRoom().filter((v, i, a) => !Game.rooms[v]);
+    },
+    isMyRoom : function(room) {
+        if (room instanceof String) {
+            return Memory.ownedRooms.indexOf(room) !== -1;
+        } else {
+            return Memory.ownedRooms.indexOf(room.name) !== -1;
+        }
     }
 };

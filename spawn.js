@@ -12,7 +12,7 @@ const roleSpawn = {
         const feederLength = _.filter(Game.creeps, (creep) => creep.memory.role === 'feeder').length;
         const builderLength = _.filter(Game.creeps, (creep) => creep.memory.role === 'builder').length;
         const upgraderLength = _.filter(Game.creeps, (creep) => creep.memory.role === 'upgrader').length;
-        const fixerLength = _.filter(Game.creeps, (creep) => creep.memory.role === 'fixer').length;
+        const repairer = _.filter(Game.creeps, (creep) => creep.memory.role === 'fixer').length + _.filter(Game.creeps, (creep) => creep.memory.role === 'repairer');
         const pickerLength = _.filter(Game.creeps, (creep) => creep.memory.role === 'picker').length;
         const attackerLength = _.filter(Game.creeps, (creep) => creep.memory.role === "attacker").length;
         const storageFixerLength = _.filter(Game.creeps, (creep) => creep.memory.role === "fixer->storage").length;
@@ -36,10 +36,10 @@ const roleSpawn = {
             }
         }
 
-        if (fixerLength < 4) {
-            var result = spawn.createCreep(this.getBuilderBody(spawn), "fishbot.fixer-" + Math.ceil(Math.random() * 10000), {role: "fixer"});
+        if (repairer < 4) {
+            var result = spawn.createCreep(this.getBuilderBody(spawn), "fishbot.repairer-" + Math.ceil(Math.random() * 10000), {role: "fixer"});
             if ((result instanceof String)) {
-                spawned = "fixer";
+                spawned = "repairer";
             }
         }
 
