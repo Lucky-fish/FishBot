@@ -30,7 +30,7 @@ const roleSpawn = {
         }
 
         if (attackerLength < 2) {
-            var result = spawn.createCreep([TOUGH, TOUGH, RANGED_ATTACK, RANGED_ATTACK, ATTACK, ATTACK, MOVE, MOVE], "fishbot.attacker-" + Math.ceil(Math.random() * 10000), {role: "attacker"});
+            var result = spawn.createCreep(this.getAttackerBody(spawn), "fishbot.attacker-" + Math.ceil(Math.random() * 10000), {role: "attacker"});
             if ((result instanceof String)) {
                 spawned = "attacker";
             }
@@ -124,6 +124,77 @@ const roleSpawn = {
         for (let i = 0; i < Math.floor(energy / unit); i ++) {
             body.push(MOVE, CARRY, WORK, MOVE, CARRY);
         }
+        return body;
+    },
+    getAttackerBody : function(spawn) {
+        const energy = spawn.room.energyCapacityAvailable;
+        const body = [];
+
+        let cost = 0;
+        let moveParts = 0;
+        let attackParts = 0;
+        let toughParts = 0;
+        let healParts = 0;
+        let rangedParts = 0;
+        let deltaCost = 0;
+        while (deltaCost < energy * 0.25) {
+            attackParts ++;
+            deltaCost += this.getBodyCost([ATTACK]);
+            if (attackParts % 2 == 0) {
+                moveParts ++;
+                deltaCost += this.getBodyCost([MOVE]);
+            }
+        }
+        cost += deltaCost;
+        if (cost < energy) {
+            while (deltaCost < energy * 0.05) {
+                deltaCost += this.getBodyCost([HEAL]);
+                healParts ++;
+                if (healParts % 2 == 0) {
+                    moveParts ++;
+                    deltaCost += this.getBodyCost([MOVE]);
+                }
+            }
+        }
+        cost += deltaCost;
+        if (cost < energy) {
+            while (deltaCost < energy * 0.05) {
+                deltaCost += this.getBodyCost([RANGED_ATTACK]);
+                rangedParts ++;
+                if (healParts % 2 == 0) {
+                    moveParts ++;
+                    deltaCost += this.getBodyCost([MOVE]);
+                }
+            }
+        }
+        cost += deltaCost;
+        while (cost += deltaCost < energy) {
+            deltaCost = 0;
+            deltaCost += this.getBodyCost([TOUGH]);
+            toughParts ++;
+            if (deltaCost % 2 == 0) {
+                moveParts ++;
+                deltaCost += this.getBodyCost([MOVE]);
+            }
+        }
+
+        // combine.
+        for (let i = 0; i < toughParts; i ++) {
+            body.push(TOUGH);
+        }
+        for (let i = 0; i < healParts; i ++) {
+            body.push(HEAL);
+        }
+        for (let i = 0; i < attackParts; i ++) {
+            body.push(ATTACK);
+        }
+        for (let i = 0; i < moveParts; i ++) {
+            body.push(MOVE);
+        }
+        for (let i = 0; i < rangedParts; i ++) {
+            body.push(RANGED_ATTACK);
+        }
+
         return body;
     },
     getBodyCost : function(parts) {
