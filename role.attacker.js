@@ -18,13 +18,11 @@ module.exports = {
             }
             exe = result != ERR_NO_BODYPART;
 
-            if (!exe) {
-                result = creep.attack(invader);
-                if (result === ERR_NOT_IN_RANGE) {
-                    creep.moveTo(invader);
-                }
-                exe = result != ERR_NO_BODYPART;
+            result = creep.attack(invader);
+            if (result === ERR_NOT_IN_RANGE) {
+                creep.moveTo(invader);
             }
+            exe = exe || result != ERR_NO_BODYPART;
         }
 
         const damagedCreep = _.filter(Game.creeps, (creep) => creep.hits < creep.hitsMax);
