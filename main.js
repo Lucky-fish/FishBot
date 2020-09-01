@@ -2,9 +2,9 @@ const roleHarvester = require('role.harvester');
 const roleUpgrader = require('role.upgrader');
 const roleBuilder = require('role.builder');
 const roleRepairer = require('role.repairer');
-const rolePicker = require('role.picker');
+const roleScavenger = require('role.scavenger');
 const roleAttacker = require('role.attacker');
-const roleFixerStorage = require("role.fixer.storage");
+const roleStorageRepairer = require("role.repairer.storage");
 const roleFeeder = require('role.feeder');
 const roleClaimer = require('role.claimer');
 
@@ -48,6 +48,7 @@ module.exports.loop = function () {
 
     for(let name in Game.creeps) {
         const creep = Game.creeps[name];
+        // these code will be disabled after the picker spawns.
         if (creep.pos.findInRange(FIND_DROPPED_RESOURCES, 4).length) {
             creep.pickup(creep.pos.findInRange(FIND_DROPPED_RESOURCES, 4)[0]);
         }
@@ -63,14 +64,14 @@ module.exports.loop = function () {
             roleUpgrader.run(creep);
         } else if(creep.memory.role === 'builder') {
             roleBuilder.run(creep);
-        } else if (creep.memory.role === 'fixer' || creep.memory.role === 'repairer') {
+        } else if (creep.memory.role === 'repairer') {
             roleRepairer.run(creep);
-        } else if (creep.memory.role === "picker") {
-            rolePicker.run(creep);
+        } else if (creep.memory.role === "scavengers") {
+            roleScavenger.run(creep);
         } else if (creep.memory.role === "attacker") {
             roleAttacker.run(creep);
-        } else if (creep.memory.role === "fixer->storage") {
-            roleFixerStorage.run(creep);
+        } else if (creep.memory.role === "fixer->storage" || creep.memory.role === "repairer->storage") {
+            roleStorageRepairer.run(creep);
         } else if (creep.memory.role === "claimer") {
             roleClaimer.run(creep);
         } else if (creep.memory.role === 'feeder') {
@@ -79,5 +80,4 @@ module.exports.loop = function () {
             creep.memory.role = "feeder";
         }
     }
-
 }
