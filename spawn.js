@@ -169,7 +169,7 @@ const roleSpawn = {
                 }
             }
         }
-        while (available > 0) {
+        while (available > this.getBodyCost([TOUGH, MOVE])) {
             available -= this.getBodyCost([TOUGH]);
             toughParts ++;
             total ++;
@@ -188,7 +188,7 @@ const roleSpawn = {
         for (let i = 0; i < attackParts; i ++) {
             body.push(ATTACK);
         }
-        for (let i = 0; i < total / 2; i ++) {
+        for (let i = 0; i < Math.ceil(total / 2); i ++) {
             body.push(MOVE);
         }
         for (let i = 0; i < rangedParts; i ++) {
