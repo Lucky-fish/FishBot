@@ -140,7 +140,7 @@ const roleSpawn = {
         let healParts = 0;
         let rangedParts = 0;
         let total = 0;
-        while (available > energy * 0.95) {
+        while (available > energy * 0.8) {
             available -= this.getBodyCost([RANGED_ATTACK]);
             rangedParts ++;
             total ++;
@@ -149,7 +149,7 @@ const roleSpawn = {
             }
         }
         if (available > 0) {
-            while (available > energy * 0.9) {
+            while (available > energy * 0.7) {
                 available -= this.getBodyCost([HEAL]);
                 healParts ++;
 
@@ -160,7 +160,7 @@ const roleSpawn = {
             }
         }
         if (available > 0) {
-            while (available > energy * 0.65) {
+            while (available > energy * 0.45) {
                 attackParts ++;
                 available -= this.getBodyCost([ATTACK]);
                 total ++;
