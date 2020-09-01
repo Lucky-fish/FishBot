@@ -167,8 +167,8 @@ const roleSpawn = {
                 }
             }
         }
-        cost += deltaCost;
-        while (cost += deltaCost < energy) {
+        while ((cost + deltaCost) < energy) {
+            cost += deltaCost;
             deltaCost = 0;
             deltaCost += this.getBodyCost([TOUGH]);
             toughParts ++;
