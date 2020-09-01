@@ -131,17 +131,18 @@ const roleSpawn = {
         const body = [];
 
         let cost = 0;
-        let moveParts = 0;
         let attackParts = 0;
         let toughParts = 0;
         let healParts = 0;
         let rangedParts = 0;
+        let total = 0;
         let deltaCost = 0;
+
         while (deltaCost < energy * 0.05) {
             deltaCost += this.getBodyCost([RANGED_ATTACK]);
             rangedParts ++;
-            if (healParts % 2 == 0) {
-                moveParts ++;
+            total ++;
+            if (total % 2 == 0) {
                 deltaCost += this.getBodyCost([MOVE]);
             }
         }
@@ -150,8 +151,9 @@ const roleSpawn = {
             while (deltaCost < energy * 0.05) {
                 deltaCost += this.getBodyCost([HEAL]);
                 healParts ++;
-                if (healParts % 2 == 0) {
-                    moveParts ++;
+
+                total ++;
+                if (total % 2 == 0) {
                     deltaCost += this.getBodyCost([MOVE]);
                 }
             }
@@ -161,8 +163,8 @@ const roleSpawn = {
             while (deltaCost < energy * 0.25) {
                 attackParts ++;
                 deltaCost += this.getBodyCost([ATTACK]);
-                if (attackParts % 2 == 0) {
-                    moveParts ++;
+                total ++;
+                if (total % 2 == 0) {
                     deltaCost += this.getBodyCost([MOVE]);
                 }
             }
@@ -172,8 +174,8 @@ const roleSpawn = {
             deltaCost = 0;
             deltaCost += this.getBodyCost([TOUGH]);
             toughParts ++;
-            if (deltaCost % 2 == 0) {
-                moveParts ++;
+            total ++;
+            if (total % 2 == 0) {
                 deltaCost += this.getBodyCost([MOVE]);
             }
         }
@@ -188,7 +190,7 @@ const roleSpawn = {
         for (let i = 0; i < attackParts; i ++) {
             body.push(ATTACK);
         }
-        for (let i = 0; i < moveParts; i ++) {
+        for (let i = 0; i < total / 2; i ++) {
             body.push(MOVE);
         }
         for (let i = 0; i < rangedParts; i ++) {
