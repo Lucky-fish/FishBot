@@ -51,7 +51,7 @@ module.exports = {
         const ownedRooms = [];
         for (let i in Game.rooms) {
             const room = Game.rooms[i];
-            if  (room.controller && (room.controller.my || room.controller.reservation.username === "Death_fish")) {
+            if  (room.controller && (room.controller.my || (room.controller.reservation && room.controller.reservation.username) === "Death_fish")) {
                 ownedRooms.push(room.name);
             }
         }
