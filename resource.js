@@ -12,7 +12,7 @@ const roomManager = require("room.manager");
 
 const resourceFinding = {
     normalFinding: function (creep) {
-        const containers = creep.room.find(FIND_STRUCTURES, {filter: function (a) {
+        const containers = roomManager.find(FIND_STRUCTURES, {filter: function (a) {
                 return (a.structureType === STRUCTURE_CONTAINER || a.structureType === STRUCTURE_STORAGE) && a.store[RESOURCE_ENERGY] > creep.store.getFreeCapacity();
             }});
 
@@ -30,7 +30,7 @@ const resourceFinding = {
             return cs;
         }
 
-        const sources = creep.room.find(FIND_SOURCES);
+        const sources = roomManager.find(FIND_SOURCES);
         const s = [];
         for (var i in sources) {
             const source = sources[i];

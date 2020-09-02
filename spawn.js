@@ -74,7 +74,7 @@ const roleSpawn = {
             }
         }
 
-        if (builderLength < 1) {
+        if (builderLength < 2) {
             const result = spawn.spawnCreep(this.getBuilderBody(spawn), "fishbot.builder-" + Math.ceil(Math.random() * 10000), {memory: {role: "builder"}});
             if ((result instanceof String)) {
                 spawned = "builder";
