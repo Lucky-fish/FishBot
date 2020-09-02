@@ -48,7 +48,7 @@ module.exports = {
                         }
                     } else {
                         found = roomManger.find(FIND_STRUCTURES, {filter: function (v) {
-                                return v.store.getUsedCapacity() > 0 && v.structureType === STRUCTURE_CONTAINER;
+                                return v.structureType === STRUCTURE_CONTAINER && v.store.getUsedCapacity() > 0;
                             }});
                         if (found.length) {
                             for (let i in found[0].store) {
