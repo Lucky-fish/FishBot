@@ -44,6 +44,8 @@ const claimer = {
                 } else if (result == ERR_NOT_IN_RANGE) {
                     creep.moveTo(controller);
                     creep.memory.finished = true;
+                } else {
+                    creep.memory.reserving = false;
                 }
                 if ((!controller.sign) || (controller.sign.username !== "Death_fish")) {
                     if (creep.signController(controller, "喵") === ERR_NOT_IN_RANGE) {
@@ -72,7 +74,7 @@ const claimer = {
         let foundRoom;
         let foundDepth = minimumDepth;
         for (let i in deep) {
-            let result = this.scanForRoom(deep[i], depth + 1, foundDepth);
+            const result = this.scanForRoom(deep[i], depth + 1, foundDepth);
             if (!result) { // no better room
                 continue;
             }
