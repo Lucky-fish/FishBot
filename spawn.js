@@ -9,12 +9,32 @@
 
 const maxEnergyUse = 800;
 
+const spawnConfig = {
+    attacker: 0,
+    repairer: 2,
+    scavenger: 1,
+    builder: 2,
+    upgrader: 1,
+    feeder: 3
+};
+
 const roomManager = require("room.manager");
 
 const roleSpawn = {
     run: function (spawn) {
         if (spawn.spawning) {
             return;
+        }
+
+        if (!spawn.memory.checkTime) {
+            spawn.memory.checkTime = 0;
+        }
+        if (spawn.memory.checkTime > 50) {
+            if (this.shouldSpawnClaimer(spawn)) {
+                if (spawn.spawnCreep(this.getClaimerBody(spawn), "fishbot.claimer-" + Math.ceil(Math.random() * 10000), {memory: {role: "claimer"}}) === OK) {
+                    return;
+                }
+            }
         }
 
         if (!spawn.memory.tasks) {
@@ -53,35 +73,35 @@ const roleSpawn = {
             }
         }
 
-        if (attackerLength < 0) {
+        if (attackerLength < spawnConfig.attacker) {
             const result = spawn.spawnCreep(this.getAttackerBody(spawn), "fishbot.attacker-" + Math.ceil(Math.random() * 10000), {memory: {role: "attacker"}});
             if ((result === OK)) {
                 spawned = "attacker";
             }
         }
 
-        if (repairerLength < 2) {
+        if (repairerLength < spawnConfig.repairer) {
             const result = spawn.spawnCreep(this.getBuilderBody(spawn), "fishbot.repairer-" + Math.ceil(Math.random() * 10000), {memory: {role: "repairer"}});
             if ((result === OK)) {
                 spawned = "repairer";
             }
         }
 
-        if (scavengerLength < 1 && spawn.room.find(FIND_MY_STRUCTURES, {filter : {structureType : STRUCTURE_STORAGE}}).length) {
+        if (scavengerLength < spawnConfig.scavenger && spawn.room.find(FIND_MY_STRUCTURES, {filter : {structureType : STRUCTURE_STORAGE}}).length) {
             const result = spawn.spawnCreep(this.getFeederBody(spawn), "fishbot.scavenger-" + Math.ceil(Math.random() * 10000), {memory: {role : "scavenger"}});
             if ((result === OK)) {
                 spawned = "scavenger";
             }
         }
 
-        if (builderLength < 0) {
+        if (builderLength < spawnConfig.builder) {
             const result = spawn.spawnCreep(this.getBuilderBody(spawn), "fishbot.builder-" + Math.ceil(Math.random() * 10000), {memory: {role: "builder"}});
             if ((result === OK)) {
                 spawned = "builder";
             }
         }
 
-        if (upgraderLength < 1) {
+        if (upgraderLength < spawnConfig.upgrader) {
             const result = spawn.spawnCreep(this.getUpgraderBody(spawn), "fishbot.upgrader-" + Math.ceil(Math.random() * 10000), {memory: {role: "upgrader"}});
             if ((result === OK)) {
                 spawned = "upgrader";
@@ -95,7 +115,7 @@ const roleSpawn = {
             }
         }
 
-        if (feederLength < 3) {
+        if (feederLength < spawnConfig.feeder) {
             const result = spawn.spawnCreep(this.getFeederBody(spawn), "fishbot.feeder-" + Math.ceil(Math.random() * 10000), {memory: {role: "feeder"}});
             if (result === OK) {
                 spawned = "feeder";
@@ -114,8 +134,12 @@ const roleSpawn = {
             return;
         }
     },
-    getAvailableEnergy : function (spawn) {
-        return Math.min(maxEnergyUse, spawn.room.energyCapacityAvailable);
+    getAvailableEnergy : function (spawn, limited = true) {
+        if (limited) {
+            return Math.min(maxEnergyUse, spawn.room.energyCapacityAvailable);
+        } else {
+            return spawn.room.energyCapacityAvailable;
+        }
     },
     getFeederBody: function (spawn) {
         const energy = this.getAvailableEnergy(spawn) - this.getBodyCost([WORK]);
@@ -237,6 +261,45 @@ const roleSpawn = {
         }
 
         return body;
+    },
+    shouldSpawnClaimer : function(spawn) {
+        let energyProduce = 0;
+        const harvesters = _.filter(Game.creeps, (creep) => creep.memory.role === 'harvester' && creep.ticksToLive > 50);
+        for (let i in harvesters) {
+            const harvester = harvesters[i];
+            for (let j in harvester.body) {
+                const type = harvester.body[j].type;
+                if (energyProduce > (3000 / 300) * roomManager.find(FIND_SOURCES).length) {
+                    energyProduce = (3000 / 300) * roomManager.find(FIND_SOURCES).length;
+                    break;
+                }
+
+                if (type == WORK) {
+                    energyProduce += 2;
+                }
+            }
+        }
+
+        let energyConsume = 0;
+
+        const consumers = _.filter(Game.creeps, (creep) => creep.memory.role === 'builder' || creep.memory.role === 'upgrader' || creep.memory.role === 'repairer');
+        // calculate their consumes.
+        for (let i in consumers) {
+            const consumer = energyConsume[i];
+            for (let j in consumer.body) {
+                if (energyConsume > (3000 / 300) * roomManager.find(FIND_SOURCES).length) {
+                    return true;
+                }
+
+                if (type == WORK) {
+                    energyConsume += 5;
+                }
+            }
+        }
+        // worst spawn
+        const maxSpawnCost = this.getBodyCost(this.getFeederBody(spawn));
+        energyConsume += maxSpawnCost;
+        return energyConsume >= energyProduce;
     },
     getBodyCost : function(parts) {
         var cost = 0;
