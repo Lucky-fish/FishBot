@@ -44,6 +44,7 @@ module.exports.loop = function () {
             if (mem.role === "claimer" && mem.reserving) {
                 roleSpawn.putClaimerSpawnTask({role : "claimer", reserving : true, targetRoomName : mem.targetRoomName}, (spawn) => roleSpawn.getClaimerBody(spawn));
             }
+            console.log("Deleting memory: " + i)
             delete Memory.creeps[i];
         }
     }
