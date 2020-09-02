@@ -32,7 +32,7 @@ module.exports = {
 						}
 					}
 
-					return e.hits < e.hitsMax && (e.structureType === STRUCTURE_WALL || (e.structureType === STRUCTURE_RAMPART && e.my) || (e.structureType === STRUCTURE_ROAD && (!creep.room.find(FIND_MY_STRUCTURES, {filter: function(e) {return e.structureType == STRUCTURE_TOWER}}))));
+					return e.hits < e.hitsMax && (e.structureType === STRUCTURE_WALL || (e.structureType === STRUCTURE_RAMPART && e.my) || (e.structureType === STRUCTURE_ROAD && (!creep.room.find(FIND_MY_STRUCTURES, {filter: function(e) {return e.structureType == STRUCTURE_TOWER}}).length)));
 				}});
 
 			broken.sort(function(a,b) {
