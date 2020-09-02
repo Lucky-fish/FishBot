@@ -293,13 +293,13 @@ const roleSpawn = {
                     return true;
                 }
 
-                if (type == WORK) {
-                    energyConsume += 5;
+                if (type == WORK) { // they need to move.
+                    energyConsume += 0.25;
                 }
             }
         }
         // worst spawn
-        const maxSpawnCost = this.getBodyCost(this.getFeederBody(spawn));
+        const maxSpawnCost = this.getBodyCost(this.getFeederBody(spawn)) * 0.15;
         energyConsume += maxSpawnCost;
         return energyConsume >= energyProduce;
     },
