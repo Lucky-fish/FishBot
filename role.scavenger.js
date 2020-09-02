@@ -17,38 +17,47 @@ module.exports = {
             creep.memory.a = true;
         }
 
-        if (!creep.memory.a && creep.ticksToLive > 200) {
+        if (!(creep.memory.a) && creep.ticksToLive > 200) {
             let found = roomManger.find(FIND_DROPPED_RESOURCES);
             if (found.length) {
                 const target = found[0];
                 if (creep.pickup(target) === ERR_NOT_IN_RANGE) {
                     creep.moveTo(target);
                 }
-            }
-            found = roomManger.find(FIND_TOMBSTONES, {filter: (v, i, a) => v.store.getUsedCapacity() > 0});
-            if (found.length) {
-                for (let i in found[0].store) {
-                    if (creep.withdraw(found[0], i) === ERR_NOT_IN_RANGE) {
-                        creep.moveTo(target);
-                        return;
+            } else {
+                found = roomManger.find(FIND_TOMBSTONES, {filter: function (v) {
+                        return v.store.getUsedCapacity() > 0;
+                    }});
+                if (found.length) {
+                    for (let i in found[0].store) {
+                        if (creep.withdraw(found[0], i) === ERR_NOT_IN_RANGE) {
+                            creep.moveTo(target);
+                            return;
+                        }
                     }
-                }
-            }
-            found = roomManger.find(FIND_RUINS, {filter: (v, i, a) => v.store.getUsedCapacity() > 0});
-            if (found.length) {
-                for (let i in found[0].store) {
-                    if (creep.withdraw(found[0], i) === ERR_NOT_IN_RANGE) {
-                        creep.moveTo(target);
-                        return;
-                    }
-                }
-            }
-            found = roomManger.find(FIND_STRUCTURES, {filter: (v, i, a) => v.store.getUsedCapacity() > 0 && v.structureType === STRUCTURE_CONTAINER});
-            if (found.length) {
-                for (let i in found[0].store) {
-                    if (creep.withdraw(found[0], i) === ERR_NOT_IN_RANGE) {
-                        creep.moveTo(target);
-                        return;
+                } else {
+                    found = roomManger.find(FIND_RUINS, {filter: function (v) {
+                            return v.store.getUsedCapacity() > 0;
+                        }});
+                    if (found.length) {
+                        for (let i in found[0].store) {
+                            if (creep.withdraw(found[0], i) === ERR_NOT_IN_RANGE) {
+                                creep.moveTo(target);
+                                return;
+                            }
+                        }
+                    } else {
+                        found = roomManger.find(FIND_STRUCTURES, {filter: function (v) {
+                                return v.store.getUsedCapacity() > 0 && v.structureType === STRUCTURE_CONTAINER;
+                            }});
+                        if (found.length) {
+                            for (let i in found[0].store) {
+                                if (creep.withdraw(found[0], i) === ERR_NOT_IN_RANGE) {
+                                    creep.moveTo(target);
+                                    return;
+                                }
+                            }
+                        }
                     }
                 }
             }
