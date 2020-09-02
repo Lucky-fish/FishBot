@@ -58,23 +58,23 @@ module.exports.loop = function () {
         if (creep.pos.findInRange(FIND_RUINS, 4).length) {
             creep.withdraw(creep.pos.findInRange(FIND_RUINS, 4).filter((v, i, a) => v.store[RESOURCE_ENERGY] > 0)[0], RESOURCE_ENERGY);
         }
-        if(creep.memory.role === 'harvester') {
+        if(creep.memory.role == 'harvester') {
             roleHarvester.run(creep);
-        } else if(creep.memory.role === 'upgrader') {
+        } else if(creep.memory.role == 'upgrader') {
             roleUpgrader.run(creep);
-        } else if(creep.memory.role === 'builder') {
+        } else if(creep.memory.role == 'builder') {
             roleBuilder.run(creep);
-        } else if (creep.memory.role === 'repairer') {
+        } else if (creep.memory.role == 'repairer') {
             roleRepairer.run(creep);
-        } else if (creep.memory.role === "scavengers") {
+        } else if (creep.memory.role == "scavengers") {
             roleScavenger.run(creep);
-        } else if (creep.memory.role === "attacker") {
+        } else if (creep.memory.role == "attacker") {
             roleAttacker.run(creep);
-        } else if (creep.memory.role === "fixer->storage" || creep.memory.role === "repairer->storage") {
+        } else if (creep.memory.role == "fixer->storage" || creep.memory.role == "repairer->storage") {
             roleStorageRepairer.run(creep);
-        } else if (creep.memory.role === "claimer") {
+        } else if (creep.memory.role == "claimer") {
             roleClaimer.run(creep);
-        } else if (creep.memory.role === 'feeder') {
+        } else if (creep.memory.role == 'feeder') {
             roleFeeder.run(creep);
         }
     }
