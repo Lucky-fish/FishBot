@@ -1,5 +1,6 @@
-const roleHarvester = require('role.upgrader');
+const roleUpgrader = require('role.upgrader');
 const lookForSource = require('resource');
+const roomManager = require("room.manager");
 
 module.exports = {
     run : function(creep) {
@@ -23,7 +24,7 @@ module.exports = {
 				}
 			}
 
-			const broken = creep.room.find(FIND_STRUCTURES, {
+			const broken = roomManager.find(FIND_STRUCTURES, {
 				filter(e) {
 					const creeps = _.filter(Game.creeps, (creep) => creep.memory.role === 'fixer');
 					for (let i in creeps) {
@@ -64,7 +65,7 @@ module.exports = {
 	        if (broken.length) {
 	            this.repair(creep, broken[0]);
 	        } else {
-	           roleHarvester.run(creep);
+	           roleUpgrader.run(creep);
 	        }
 	    } else {
 	        lookForSource.harvest(creep);
