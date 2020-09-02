@@ -60,14 +60,14 @@ const roleSpawn = {
             }
         }
 
-        if (repairerLength < 0) {
+        if (repairerLength < 2) {
             const result = spawn.spawnCreep(this.getBuilderBody(spawn), "fishbot.repairer-" + Math.ceil(Math.random() * 10000), {memory: {role: "repairer"}});
             if ((result === OK)) {
                 spawned = "repairer";
             }
         }
 
-        if (scavengerLength < 0 && spawn.room.find(FIND_MY_STRUCTURES, {filter : {structureType : STRUCTURE_STORAGE}}).length) {
+        if (scavengerLength < 1 && spawn.room.find(FIND_MY_STRUCTURES, {filter : {structureType : STRUCTURE_STORAGE}}).length) {
             const result = spawn.spawnCreep(this.getFeederBody(spawn), "fishbot.scavenger-" + Math.ceil(Math.random() * 10000), {memory: {role : "scavenger"}});
             if ((result === OK)) {
                 spawned = "scavenger";
