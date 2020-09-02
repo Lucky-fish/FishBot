@@ -286,7 +286,7 @@ const roleSpawn = {
         const consumers = _.filter(Game.creeps, (creep) => creep.memory.role === 'builder' || creep.memory.role === 'upgrader' || creep.memory.role === 'repairer');
         // calculate their consumes.
         for (let i in consumers) {
-            const consumer = energyConsume[i];
+            const consumer = consumers[i];
             for (let j in consumer.body) {
                 if (energyConsume >= energyProduce) {
                     return true;
