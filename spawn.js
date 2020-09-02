@@ -25,8 +25,8 @@ const roleSpawn = {
 
             if (spawn.spawnCreep(body, "fishbot-" + Math.ceil(Math.random() * 10000), memory) === OK) {
                 spawn.memory.tasks.shift();
+                return;
             }
-            return;
         }
 
         const feederLength = _.filter(Game.creeps, (creep) => creep.memory.role === 'feeder').length;
