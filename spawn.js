@@ -89,7 +89,7 @@ const roleSpawn = {
         }
 
         if (harvesterLength < containerLength) {
-            const result = spawn.createCreep(this.getHarvesterBody(spawn), "fishbot.harvester-" + Math.ceil(Math.random() * 10000), {role: "harvester"});
+            const result = spawn.spawnCreep(this.getHarvesterBody(spawn), "fishbot.harvester-" + Math.ceil(Math.random() * 10000), {memory: {role: "harvester"}});
             if ((result instanceof String)) {
                 spawned = "harvester";
             }
