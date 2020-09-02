@@ -1,5 +1,6 @@
 const roleBuilder = require("role.builder");
 const lookForSource = require("resource");
+const roomManager = require("room.manager");
 const utils = require("utils");
 const roleFeeder = {
     /** @param {Creep} creep **/
@@ -12,8 +13,8 @@ const roleFeeder = {
         if (!creep.memory.a) {
             lookForSource.harvest(creep);
         } else {
-            const targets = creep.room.find(FIND_STRUCTURES, {
-                filter: (structure) => {
+            const targets = roomManager.find(FIND_STRUCTURES, {
+                filter: function (structure) {
                     return (structure.structureType === STRUCTURE_EXTENSION ||
                         structure.structureType === STRUCTURE_SPAWN ||
                         structure.structureType === STRUCTURE_TOWER) && structure.energy < structure.energyCapacity;
