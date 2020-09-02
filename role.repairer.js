@@ -1,16 +1,11 @@
 const roleUpgrader = require('role.upgrader');
 const lookForSource = require('resource');
 const roomManager = require("room.manager");
+const commons = require("commons");
 
 module.exports = {
     run : function(creep) {
-        if(creep.memory.a && creep.carry.energy === 0) {
-            creep.memory.a = false;
-            delete creep.memory.fixing;
-	    }
-	    if(!creep.memory.a && creep.carry.energy === creep.carryCapacity) {
-	        creep.memory.a = true;
-	    }
+		commons.updateEnergy(creep);
 	    
 	    if (creep.memory.a) {
 	    	delete creep.memory.fixTimer;
@@ -68,6 +63,7 @@ module.exports = {
 	           roleUpgrader.run(creep);
 	        }
 	    } else {
+	    	delete creep.memory.fixing;
 	        lookForSource.harvest(creep);
         }
     },

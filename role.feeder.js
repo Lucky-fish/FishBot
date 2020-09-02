@@ -2,14 +2,11 @@ const roleBuilder = require("role.builder");
 const lookForSource = require("resource");
 const roomManager = require("room.manager");
 const utils = require("utils");
+const commons = require("commons");
 const roleFeeder = {
     /** @param {Creep} creep **/
     run: function (creep) {
-        if (creep.memory.a && creep.carry.energy === 0) {
-            creep.memory.a = false;
-        } else if (!creep.memory.a && creep.carry.energy === creep.carryCapacity) {
-            creep.memory.a = true;
-        }
+        commons.updateEnergy(creep);
         if (!creep.memory.a) {
             lookForSource.harvest(creep);
         } else {

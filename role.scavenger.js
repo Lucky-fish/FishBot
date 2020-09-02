@@ -8,14 +8,11 @@
  */
 const utils = require("utils");
 const roomManger = require("room.manager");
+const commons = require("commons");
 
 module.exports = {
     run : function(creep) {
-        if (creep.memory.a && creep.carry.energy === 0) {
-            creep.memory.a = false;
-        } else if (!creep.memory.a && creep.carry.energy === creep.carryCapacity) {
-            creep.memory.a = true;
-        }
+        commons.updateEnergy(creep);
 
         if (!(creep.memory.a) && creep.ticksToLive > 200) {
             let found = roomManger.find(FIND_DROPPED_RESOURCES);

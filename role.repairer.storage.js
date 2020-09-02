@@ -10,14 +10,11 @@
 const roleUpgrader = require("role.upgrader");
 const lookForSource = require("resource");
 const utils = require("utils");
+const commons = require("commons");
 
 module.exports = {
     run : function(creep) {
-		if (creep.memory.a && creep.carry.energy === 0) {
-			creep.memory.a = false;
-		} else if (!creep.memory.a && creep.carry.energy === creep.carryCapacity) {
-			creep.memory.a = true;
-		}
+		commons.updateEnergy(creep);
 	    
 	    if (creep.memory.a) {
 			const broken = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (e) => ((e.structureType === STRUCTURE_STORAGE && e.my) || e.structureType === STRUCTURE_CONTAINER) && e.hits < e.hitsMax});

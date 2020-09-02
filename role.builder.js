@@ -2,15 +2,12 @@ const roleUpgrader = require("role.upgrader");
 const lookForSource = require("resource");
 const utils = require("utils");
 const roomManager = require("room.manager");
+const commons = require("commons");
 
 const roleBuilder = {
 	/** @param {Creep} creep **/
 	run: function (creep) {
-		if (creep.memory.a && creep.carry.energy === 0) {
-			creep.memory.a = false;
-		} else if (!creep.memory.a && creep.carry.energy === creep.carryCapacity) {
-			creep.memory.a = true;
-		}
+		commons.updateEnergy(creep);
 
 		if (creep.memory.a) {
 			const targets = roomManager.find(FIND_CONSTRUCTION_SITES);
@@ -35,7 +32,12 @@ const roleBuilder = {
 				if (creep.build(targets[0]) === ERR_NOT_IN_RANGE) {
 					creep.moveTo(targets[0]);
 				}
+				creep.room.memory.building = true;
 			} else {
+				if (creep.room.memory.building) {
+					Game.notify("It seems that there is nothing to build, so " + creep.name + " would upgrade the room controller now.");
+				}
+				creep.room.memory.building = false;
 				roleUpgrader.run(creep);
 			}
 		} else {
