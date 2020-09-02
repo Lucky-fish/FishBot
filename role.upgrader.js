@@ -4,7 +4,7 @@ const roleUpgrader = {
 
     /** @param {Creep} creep **/
     run: function (creep) {
-        if (creep.memory.a && creep.store.getUsedCapacity() === 0) {
+        if (creep.memory.a && creep.store.getFreeCapacity() === 0) {
             creep.memory.a = false;
         } else if (!creep.memory.a && creep.store.getFreeCapacity() === creep.store.getCapacity()) {
             creep.memory.a = true;
