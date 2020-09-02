@@ -51,6 +51,9 @@ module.exports = {
                                 return v.structureType === STRUCTURE_CONTAINER && v.store.getUsedCapacity() > 0;
                             }});
                         if (found.length) {
+                            found.sort(function(a,b) { // prefers further.
+                                return utils.distance(b.pos, creep.pos) - utils.distance(a.pos, creep.pos);
+                            });
                             for (let i in found[0].store) {
                                 if (creep.withdraw(found[0], i) === ERR_NOT_IN_RANGE) {
                                     creep.moveTo(found[0]);
@@ -74,6 +77,7 @@ module.exports = {
             broken.sort(function(a,b) {
                 return utils.distance(a.pos, creep.pos) - utils.distance(b.pos, creep.pos);
             });
+
 
             if (broken.length) {
                 creep.repair(broken[0]);
