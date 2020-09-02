@@ -21,7 +21,7 @@ const roleSpawn = {
         if (spawn.memory.tasks.length) {
             const task = spawn.memory.tasks[0];
             let body = task.body;
-            let memory = task.memory;
+            let memory = JSON.parse(JSON.stringify(task.memory));
 
             if (spawn.spawnCreep(body, "fishbot-" + Math.ceil(Math.random() * 10000), memory) === OK) {
                 spawn.memory.tasks.shift();
