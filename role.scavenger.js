@@ -62,22 +62,13 @@ module.exports = {
                 }
             }
         } else {
-            const found = roomManger.find(FIND_MY_STRUCTURES, {filter : {structureType : STRUCTURE_STORAGE}});
+            const found = roomManger.find(FIND_MY_STRUCTURES, {filter : function (e) {
+                return e.structureType == STRUCTURE_STORAGE;
+                }});
 
             const broken = roomManger.find(FIND_STRUCTURES, {
-                filter(e) {
-                    const creeps = _.filter(Game.creeps, (creep) => creep.memory.role === 'fixer');
-                    for (let i in creeps) {
-                        const check = creeps[i];
-                        if (check === creep) {
-                            continue;
-                        }
-                        if (check.memory.fixing && check.memory.fixing === e.id) {
-                            return false;
-                        }
-                    }
-
-                    return e.hits < e.hitsMax && (e.structureType === STRUCTURE_WALL || (e.structureType === STRUCTURE_ROAD));
+                filter: function (e) {
+                    return e.hits < e.hitsMax;
                 }});
 
             broken.sort(function(a,b) {
