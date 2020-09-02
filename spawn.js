@@ -7,7 +7,7 @@
  * mod.thing == 'a thing'; // true
  */
 
-const maxEnergyUse = 1500;
+const maxEnergyUse = 800;
 
 const roomManager = require("room.manager");
 
