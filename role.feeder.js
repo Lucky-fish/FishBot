@@ -1,5 +1,6 @@
 const roleBuilder = require("role.builder");
 const lookForSource = require("resource");
+const utils = require("utils");
 const roleFeeder = {
     /** @param {Creep} creep **/
     run: function (creep) {
@@ -24,7 +25,7 @@ const roleFeeder = {
                 } else if (b.structureType === STRUCTURE_TOWER) {
                     return -1;
                 }
-                return 0;
+                return utils.distance(a.pos, creep.pos) - utils.distance(b.pos, creep.pos);
             });
             if (targets.length > 0) {
                 if (creep.transfer(targets[0], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
