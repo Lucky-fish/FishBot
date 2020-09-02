@@ -59,14 +59,14 @@ module.exports = {
         return this.getOwnRoom().filter((v, i, a) => !Game.rooms[v]);
     },
     isClaimableRoom : function(room) {
-        if (Game.rooms[room] && (!Game.rooms[room].controller)) {
-            return true;
-        }
-
         if (room instanceof String) {
-            return this.getOwnRoom().indexOf(room) !== -1;
+            if (Game.rooms[room] && (!Game.rooms[room].controller)) {
+                return false;
+            }
+
+            return this.getOwnRoom().indexOf(room) === -1;
         } else {
-            return this.getOwnRoom().indexOf(room.name) !== -1;
+            return this.getOwnRoom().indexOf(room.name) === -1;
         }
     }
 };
