@@ -161,7 +161,7 @@ const roleSpawn = {
         const body = [];
         const unit = this.getBodyCost([MOVE, CLAIM, CLAIM]);
         for (let i = 0; i < Math.floor(energy / unit); i ++) {
-            body.push(WORK, CLAIM, CLAIM);
+            body.push(MOVE, CLAIM, CLAIM);
         }
         return body;
     },
