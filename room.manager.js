@@ -23,6 +23,10 @@ module.exports = {
         return targets;
     },
     getOwnRoom : function() {
+        if (!Memory.roomCacheTime) {
+            Memory.roomCacheTime = 0;
+        }
+
         if (!Memory.ownedRooms) {
             const ownedRooms = this.findOwnRooms();
             const ownedRoomNames = [];
@@ -31,8 +35,14 @@ module.exports = {
                 ownedRoomNames.push(room);
             }
             Memory.ownedRooms = ownedRoomNames;
+            return Memory.ownedRooms;
         } else {
             this.cleanRooms();
+            if (Memory.roomCacheTime > 10) {
+                delete Memory.ownedRooms;
+                return this.getOwnRoom();
+            }
+            Memory.roomCacheTime ++;
             return Memory.ownedRooms;
         }
     },
