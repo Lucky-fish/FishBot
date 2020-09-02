@@ -64,9 +64,9 @@ module.exports = {
         }
 
         if (room instanceof String) {
-            return Memory.ownedRooms.indexOf(room) !== -1;
+            return this.getOwnRoom().indexOf(room) !== -1;
         } else {
-            return Memory.ownedRooms.indexOf(room.name) !== -1;
+            return this.getOwnRoom().indexOf(room.name) !== -1;
         }
     }
 };
