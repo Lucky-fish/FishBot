@@ -53,7 +53,7 @@ const roleSpawn = {
             }
         }
 
-        if (attackerLength < 2) {
+        if (attackerLength < 0) {
             const result = spawn.spawnCreep(this.getAttackerBody(spawn), "fishbot.attacker-" + Math.ceil(Math.random() * 10000), {memory: {role: "attacker"}});
             if ((result === OK)) {
                 spawned = "attacker";
