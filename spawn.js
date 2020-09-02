@@ -48,60 +48,60 @@ const roleSpawn = {
 
         if (storageRepairerLength < containerLength) {
             const result = spawn.spawnCreep([WORK, WORK, WORK, CARRY, MOVE, MOVE], "fishbot.storage-repairer-" + Math.ceil(Math.random() * 10000), {memory: {role: "repairer->storage"}});
-            if ((result instanceof String)) {
+            if ((result === OK)) {
                 spawned = "repairer->storager";
             }
         }
 
         if (attackerLength < 2) {
             const result = spawn.spawnCreep(this.getAttackerBody(spawn), "fishbot.attacker-" + Math.ceil(Math.random() * 10000), {memory: {role: "attacker"}});
-            if ((result instanceof String)) {
+            if ((result === OK)) {
                 spawned = "attacker";
             }
         }
 
         if (repairerLength < 1) {
             const result = spawn.spawnCreep(this.getBuilderBody(spawn), "fishbot.repairer-" + Math.ceil(Math.random() * 10000), {memory: {role: "repairer"}});
-            if ((result instanceof String)) {
+            if ((result === OK)) {
                 spawned = "repairer";
             }
         }
 
         if (scavengerLength < 1 && spawn.room.find(FIND_MY_STRUCTURES, {filter : {structureType : STRUCTURE_STORAGE}}).length) {
             const result = spawn.spawnCreep(this.getFeederBody(spawn), "fishbot.scavenger-" + Math.ceil(Math.random() * 10000), {memory: {role : "scavenger"}});
-            if ((result instanceof String)) {
+            if ((result === OK)) {
                 spawned = "scavenger";
             }
         }
 
         if (builderLength < 2) {
             const result = spawn.spawnCreep(this.getBuilderBody(spawn), "fishbot.builder-" + Math.ceil(Math.random() * 10000), {memory: {role: "builder"}});
-            if ((result instanceof String)) {
+            if ((result === OK)) {
                 spawned = "builder";
             }
         }
 
         if (upgraderLength < 1) {
             const result = spawn.spawnCreep(this.getUpgraderBody(spawn), "fishbot.upgrader-" + Math.ceil(Math.random() * 10000), {memory: {role: "upgrader"}});
-            if ((result instanceof String)) {
+            if ((result === OK)) {
                 spawned = "upgrader";
             }
         }
 
         if (harvesterLength < containerLength) {
             const result = spawn.spawnCreep(this.getHarvesterBody(spawn), "fishbot.harvester-" + Math.ceil(Math.random() * 10000), {memory: {role: "harvester"}});
-            if ((result instanceof String)) {
+            if ((result === OK)) {
                 spawned = "harvester";
             }
         }
 
         if (feederLength < 3) {
             const result = spawn.spawnCreep(this.getFeederBody(spawn), "fishbot.feeder-" + Math.ceil(Math.random() * 10000), {memory: {role: "feeder"}});
-            if ((result instanceof String)) {
-                spawned = "feeder-";
+            if (result === OK) {
+                spawned = "feeder";
             }
         }
-        if (spawned instanceof String) {
+        if (spawned) {
             console.log("Spawning: " + spawned);
         }
     },
