@@ -3,13 +3,11 @@ const lookForSource = require('resource');
 
 module.exports = {
     run : function(creep) {
-        if(creep.memory.a && creep.carry.energy === 0) {
-            creep.memory.a = false;
-            delete creep.memory.fixing;
-	    }
-	    if(!creep.memory.a && creep.carry.energy === creep.carryCapacity) {
-	        creep.memory.a = true;
-	    }
+		if (creep.memory.a && creep.store.getUsedCapacity() === 0) {
+			creep.memory.a = false;
+		} else if (!creep.memory.a && creep.getFreeCapacity() === creep.getCapacity()) {
+			creep.memory.a = true;
+		}
 	    
 	    if (creep.memory.a) {
 	    	delete creep.memory.fixTimer;

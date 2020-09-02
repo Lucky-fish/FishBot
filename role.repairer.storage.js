@@ -13,12 +13,11 @@ const utils = require("utils");
 
 module.exports = {
     run : function(creep) {
-        if(creep.memory.a && creep.carry.energy === 0) {
-            creep.memory.a = false;
-	    }
-	    if(!creep.memory.a && creep.carry.energy === creep.carryCapacity) {
-	        creep.memory.a = true;
-	    }
+		if (creep.memory.a && creep.store.getUsedCapacity() === 0) {
+			creep.memory.a = false;
+		} else if (!creep.memory.a && creep.getFreeCapacity() === creep.getCapacity()) {
+			creep.memory.a = true;
+		}
 	    
 	    if (creep.memory.a) {
 			const broken = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (e) => ((e.structureType === STRUCTURE_STORAGE && e.my) || e.structureType === STRUCTURE_CONTAINER) && e.hits < e.hitsMax});

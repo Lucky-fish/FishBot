@@ -4,9 +4,9 @@ const utils = require("utils");
 const roleFeeder = {
     /** @param {Creep} creep **/
     run: function (creep) {
-        if (creep.memory.a && creep.carry.energy === 0) {
+        if (creep.memory.a && creep.store.getUsedCapacity() === 0) {
             creep.memory.a = false;
-        } else if (!creep.memory.a && creep.carry.energy === creep.carryCapacity) {
+        } else if (!creep.memory.a && creep.getFreeCapacity() === creep.getCapacity()) {
             creep.memory.a = true;
         }
         if (!creep.memory.a) {

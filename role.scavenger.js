@@ -6,11 +6,13 @@
  * var mod = require('role.picker');
  * mod.thing == 'a thing'; // true
  */
+const utils = require("utils");
+
 module.exports = {
     run : function(creep) {
-        if (creep.memory.a && creep.carry.energy === 0) {
+        if (creep.memory.a && creep.store.getUsedCapacity() === 0) {
             creep.memory.a = false;
-        } else if (!creep.memory.a && creep.carry.energy === creep.carryCapacity) {
+        } else if (!creep.memory.a && creep.getFreeCapacity() === creep.getCapacity()) {
             creep.memory.a = true;
         }
 
@@ -31,7 +33,16 @@ module.exports = {
                     }
                 }
             }
-            found = creep.room.find(FIND_RUINS, {filter: creep.room.find(FIND_TOMBSTONES, {filter: (v, i, a) => v.store.getUsedCapacity() > 0})});
+            found = creep.room.find(FIND_RUINS, {filter: (v, i, a) => v.store.getUsedCapacity() > 0});
+            if (found.length) {
+                for (let i in found[0].store) {
+                    if (creep.withdraw(found[0], i) === ERR_NOT_IN_RANGE) {
+                        creep.moveTo(target);
+                        return;
+                    }
+                }
+            }
+            found = creep.room.find(FIND_STRUCTURES, {filter: (v, i, a) => v.store.getUsedCapacity() > 0 && v.structureType === STRUCTURE_CONTAINER});
             if (found.length) {
                 for (let i in found[0].store) {
                     if (creep.withdraw(found[0], i) === ERR_NOT_IN_RANGE) {
@@ -42,6 +53,31 @@ module.exports = {
             }
         } else {
             const found = creep.room.find(FIND_MY_STRUCTURES, {filter : {structureType : STRUCTURE_STORAGE}});
+
+            const broken = creep.room.find(FIND_STRUCTURES, {
+                filter(e) {
+                    const creeps = _.filter(Game.creeps, (creep) => creep.memory.role === 'fixer');
+                    for (let i in creeps) {
+                        const check = creeps[i];
+                        if (check === creep) {
+                            continue;
+                        }
+                        if (check.memory.fixing && check.memory.fixing === e.id) {
+                            return false;
+                        }
+                    }
+
+                    return e.hits < e.hitsMax && (e.structureType === STRUCTURE_WALL || (e.structureType === STRUCTURE_ROAD));
+                }});
+
+            broken.sort(function(a,b) {
+                return utils.distance(a.pos, creep.pos) - utils.distance(b.pos, creep.pos);
+            });
+
+            if (broken.length) {
+                creep.repair(broken[0]);
+            }
+
             if (found.length) {
                 for (let j in found) {
                     const storage = found[j];
@@ -50,7 +86,9 @@ module.exports = {
                     }
 
                     for (let i in creep.store) {
-                        creep.transfer(storage, i);
+                        if (creep.transfer(storage, i) === ERR_NOT_IN_RANGE) {
+                            creep.moveTo(storage);
+                        }
                     }
                     return;
                 }
