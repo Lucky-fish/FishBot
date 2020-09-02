@@ -288,7 +288,7 @@ const roleSpawn = {
         for (let i in consumers) {
             const consumer = energyConsume[i];
             for (let j in consumer.body) {
-                if (energyConsume > (3000 / 300) * roomManager.find(FIND_SOURCES).length) {
+                if (energyConsume >= energyProduce) {
                     return true;
                 }
 
