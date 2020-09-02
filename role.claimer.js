@@ -8,7 +8,7 @@ const claimer = {
         }
 
         if (!creep.memory.targetRoomName) {
-            const targetRoomResult = this.scanForRoom(creep.room.name, 0, 2147483647);
+            const targetRoomResult = this.scanForRoom(creep.room.name, 0, 3);
             creep.memory.targetRoomName = targetRoomResult.room;
         }
         const targetRoomName = creep.memory.targetRoomName;
