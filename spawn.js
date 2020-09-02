@@ -7,7 +7,7 @@
  * mod.thing == 'a thing'; // true
  */
 
-const maxEnergyUse = 800;
+const maxEnergyUse = 1500;
 
 const roleSpawn = {
     run: function (spawn) {
@@ -56,7 +56,7 @@ const roleSpawn = {
             }
         }
 
-        if (repairerLength < 4) {
+        if (repairerLength < 1) {
             const result = spawn.createCreep(this.getBuilderBody(spawn), "fishbot.repairer-" + Math.ceil(Math.random() * 10000), {role: "repairer"});
             if ((result instanceof String)) {
                 spawned = "repairer";
@@ -77,7 +77,7 @@ const roleSpawn = {
             }
         }
 
-        if (upgraderLength < 4) {
+        if (upgraderLength < 1) {
             const result = spawn.createCreep(this.getUpgraderBody(spawn), "fishbot.upgrader-" + Math.ceil(Math.random() * 10000), {role: "upgrader"});
             if ((result instanceof String)) {
                 spawned = "upgrader";
