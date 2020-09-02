@@ -29,6 +29,16 @@ module.exports.loop = function () {
     }
 
     for (let i in Memory.creeps) {
+        let spawning = false;
+        for (let j in Game.spawns) {
+            if (Game.spawns[j].spawning.name == i) {
+                spawning = true;
+            }
+        }
+        if (spawning) {
+            continue;
+        }
+
         if (!Game.creeps[i]) {
             const mem = Memory.creeps[i];
             if (mem.role === "claimer" && mem.reserving) {
