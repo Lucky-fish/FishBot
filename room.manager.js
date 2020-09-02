@@ -40,6 +40,7 @@ module.exports = {
             this.cleanRooms();
             if (Memory.roomCacheTime > 10) {
                 delete Memory.ownedRooms;
+                Memory.roomCacheTime = 0;
                 return this.getOwnRoom();
             }
             Memory.roomCacheTime ++;
