@@ -31,7 +31,7 @@ module.exports.loop = function () {
     for (let i in Memory.creeps) {
         let spawning = false;
         for (let j in Game.spawns) {
-            if (Game.spawns[j].spawning.name == i) {
+            if (Game.spawns[j].spawning && Game.spawns[j].spawning.name == i) {
                 spawning = true;
             }
         }
