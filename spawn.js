@@ -288,6 +288,7 @@ const roleSpawn = {
         for (let i in consumers) {
             const consumer = consumers[i];
             for (let j in consumer.body) {
+                const type = consumer.body[j].type;
                 if (energyConsume >= energyProduce) {
                     return true;
                 }
