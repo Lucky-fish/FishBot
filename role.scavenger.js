@@ -53,7 +53,7 @@ module.exports = {
                         if (found.length) {
                             for (let i in found[0].store) {
                                 if (creep.withdraw(found[0], i) === ERR_NOT_IN_RANGE) {
-                                    creep.moveTo(target);
+                                    creep.moveTo(found[0]);
                                     return;
                                 }
                             }
