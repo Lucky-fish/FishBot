@@ -298,9 +298,6 @@ const roleSpawn = {
                 }
             }
         }
-        // worst spawn
-        const maxSpawnCost = this.getBodyCost(this.getFeederBody(spawn)) * 0.15;
-        energyConsume += maxSpawnCost;
         return energyConsume >= energyProduce;
     },
     getBodyCost : function(parts) {
