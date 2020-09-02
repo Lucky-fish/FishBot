@@ -35,6 +35,7 @@ const roleSpawn = {
                     return;
                 }
             }
+            spawn.memory.checkTime = 0;
         }
 
         if (!spawn.memory.tasks) {
