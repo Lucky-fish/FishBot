@@ -8,9 +8,11 @@
  */
 
 const utils = require("utils");
+const roomManager = require("room.manager");
+
 const resourceFinding = {
     normalFinding: function (creep) {
-        const containers = creep.room.find(FIND_STRUCTURES, {filter: (a) => (a.structureType === STRUCTURE_CONTAINER || a.structureType === STRUCTURE_STORAGE) && a.store[RESOURCE_ENERGY] > creep.store.getFreeCapacity()});
+        const containers = roomManager.find(FIND_STRUCTURES, {filter: (a) => (a.structureType === STRUCTURE_CONTAINER || a.structureType === STRUCTURE_STORAGE) && a.store[RESOURCE_ENERGY] > creep.store.getFreeCapacity()});
 
         let cs = null;
         if (containers.length) {
@@ -26,7 +28,7 @@ const resourceFinding = {
             return cs;
         }
 
-        const sources = creep.room.find(FIND_SOURCES);
+        const sources = roomManager.find(FIND_SOURCES);
         const s = [];
         for (var i in sources) {
             const source = sources[i];
@@ -46,7 +48,7 @@ const resourceFinding = {
             return Game.getObjectById(creep.memory.lockedResourceId);
         }
 
-        const sources = creep.room.find(FIND_SOURCES);
+        const sources = roomManager.find(FIND_SOURCES);
 
         for (let i in sources) {
             let locked = false;

@@ -1,6 +1,7 @@
 const roleUpgrader = require("role.upgrader");
 const lookForSource = require("resource");
 const utils = require("utils");
+const roomManager = require("room.manager");
 
 const roleBuilder = {
 	/** @param {Creep} creep **/
@@ -12,7 +13,7 @@ const roleBuilder = {
 		}
 
 		if (creep.memory.a) {
-			const targets = creep.room.find(FIND_CONSTRUCTION_SITES);
+			const targets = roomManager.find(FIND_CONSTRUCTION_SITES);
 			if (targets.length) {
 				if (utils.distance(creep.pos, targets[0].pos) < 3) {
 					if (creep.move(LEFT)) { // free the source...

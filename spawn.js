@@ -9,6 +9,8 @@
 
 const maxEnergyUse = 1500;
 
+const roomManager = require("room.manager");
+
 const roleSpawn = {
     run: function (spawn) {
         if (spawn.spawning) {
@@ -38,7 +40,7 @@ const roleSpawn = {
         const storageRepairerLength = _.filter(Game.creeps, (creep) => creep.memory.role === "repairer->storage").length + _.filter(Game.creeps, (creep) => creep.memory.role === "fixer->storage").length;
         const harvesterLength = _.filter(Game.creeps, (creep) => creep.memory.role === 'harvester' && creep.ticksToLive > 50).length;
 
-        const containerLength = Math.min(spawn.room.find(FIND_SOURCES).length, spawn.room.find(FIND_STRUCTURES, {filter: (e) => ((e.structureType === STRUCTURE_STORAGE && e.my) || e.structureType === STRUCTURE_CONTAINER)}).length);
+        const containerLength = Math.min(roomManager.find(FIND_SOURCES).length, roomManager.find(FIND_STRUCTURES, {filter: (e) => (e.structureType === STRUCTURE_CONTAINER)}).length);
 
         let spawned = null;
 

@@ -7,6 +7,7 @@
  * mod.thing == 'a thing'; // true
  */
 const utils = require("utils");
+const roomManger = require("room.manager");
 
 module.exports = {
     run : function(creep) {
@@ -17,14 +18,14 @@ module.exports = {
         }
 
         if (!creep.memory.a && creep.ticksToLive > 200) {
-            let found = creep.room.find(FIND_DROPPED_RESOURCES);
+            let found = roomManger.find(FIND_DROPPED_RESOURCES);
             if (found.length) {
                 const target = found[0];
                 if (creep.pickup(target) === ERR_NOT_IN_RANGE) {
                     creep.moveTo(target);
                 }
             }
-            found = creep.room.find(FIND_TOMBSTONES, {filter: (v, i, a) => v.store.getUsedCapacity() > 0});
+            found = roomManger.find(FIND_TOMBSTONES, {filter: (v, i, a) => v.store.getUsedCapacity() > 0});
             if (found.length) {
                 for (let i in found[0].store) {
                     if (creep.withdraw(found[0], i) === ERR_NOT_IN_RANGE) {
@@ -33,7 +34,7 @@ module.exports = {
                     }
                 }
             }
-            found = creep.room.find(FIND_RUINS, {filter: (v, i, a) => v.store.getUsedCapacity() > 0});
+            found = roomManger.find(FIND_RUINS, {filter: (v, i, a) => v.store.getUsedCapacity() > 0});
             if (found.length) {
                 for (let i in found[0].store) {
                     if (creep.withdraw(found[0], i) === ERR_NOT_IN_RANGE) {
@@ -42,7 +43,7 @@ module.exports = {
                     }
                 }
             }
-            found = creep.room.find(FIND_STRUCTURES, {filter: (v, i, a) => v.store.getUsedCapacity() > 0 && v.structureType === STRUCTURE_CONTAINER});
+            found = roomManger.find(FIND_STRUCTURES, {filter: (v, i, a) => v.store.getUsedCapacity() > 0 && v.structureType === STRUCTURE_CONTAINER});
             if (found.length) {
                 for (let i in found[0].store) {
                     if (creep.withdraw(found[0], i) === ERR_NOT_IN_RANGE) {
@@ -52,9 +53,9 @@ module.exports = {
                 }
             }
         } else {
-            const found = creep.room.find(FIND_MY_STRUCTURES, {filter : {structureType : STRUCTURE_STORAGE}});
+            const found = roomManger.find(FIND_MY_STRUCTURES, {filter : {structureType : STRUCTURE_STORAGE}});
 
-            const broken = creep.room.find(FIND_STRUCTURES, {
+            const broken = roomManger.find(FIND_STRUCTURES, {
                 filter(e) {
                     const creeps = _.filter(Game.creeps, (creep) => creep.memory.role === 'fixer');
                     for (let i in creeps) {
