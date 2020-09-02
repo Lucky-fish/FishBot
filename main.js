@@ -76,8 +76,6 @@ module.exports.loop = function () {
             roleClaimer.run(creep);
         } else if (creep.memory.role === 'feeder') {
             roleFeeder.run(creep);
-        } else {
-            creep.memory.role = "feeder";
         }
     }
 }
