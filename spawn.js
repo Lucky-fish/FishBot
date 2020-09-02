@@ -99,6 +99,8 @@ const roleSpawn = {
             const result = spawn.spawnCreep(this.getFeederBody(spawn), "fishbot.feeder-" + Math.ceil(Math.random() * 10000), {memory: {role: "feeder"}});
             if (result === OK) {
                 spawned = "feeder";
+            } else if (feederLength <= 0) {
+                Game.notify("There is no feeder and we can not even spawn one.");
             }
         }
         if (spawned) {
