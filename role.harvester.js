@@ -7,8 +7,16 @@
  * mod.thing == 'a thing'; // true
  */
 const lookForSource = require("resource");
+const spawn = require("spawn");
+
 module.exports = {
     run : function(creep) {
+        if (creep.ticksToLive < 50) {
+            spawn.putSpawnTask(JSON.parse(JSON.stringify(creep.memory)), function(spawnIn) {
+                return spawn.getHarvesterBody(spawnIn);
+            });
+        }
+
         const source = lookForSource.lockFinding(creep);
         if(creep.harvest(source) === ERR_NOT_IN_RANGE) {
             creep.moveTo(source);
