@@ -23,6 +23,20 @@ module.exports = {
                 creep.moveTo(invader);
             }
             exe = exe || result != ERR_NO_BODYPART;
+        } else {
+            const hostileBuildings = creep.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES);
+            if (hostileBuildings) {
+                let result = creep.rangedAttack(hostileBuildings);
+                if (result === ERR_NOT_IN_RANGE) {
+                    creep.moveTo(hostileBuildings);
+                }
+                exe = result != ERR_NO_BODYPART;
+                result = creep.attack(hostileBuildings);
+                if (result === ERR_NOT_IN_RANGE) {
+                    creep.moveTo(hostileBuildings);
+                }
+                exe = exe || result != ERR_NO_BODYPART;
+            }
         }
 
         const damagedCreep = _.filter(Game.creeps, (creep) => creep.hits < creep.hitsMax);
