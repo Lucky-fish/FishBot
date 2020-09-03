@@ -14,7 +14,7 @@ const claimer = {
         const targetRoomName = creep.memory.targetRoomName;
 
         if (creep.room.name !== targetRoomName) {
-            if (creep.memory.lastRoom !== creep.room.name) {
+            if ((!creep.memory.lastRoom) || creep.memory.lastRoom !== creep.room.name || (!creep.memory.target)) {
                 creep.memory.lastRoom = creep.room.name;
                 creep.memory.target = creep.pos.findClosestByPath(Game.map.findExit(creep.room, targetRoomName), {algorithm: "astar"});
             }
