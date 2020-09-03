@@ -22,6 +22,10 @@ const roomManager = require("room.manager");
 
 const roleSpawn = {
     run: function (spawn) {
+        if (!Memory.spawnConfig) {
+            Memory.spawnConfig = spawnConfig;
+        }
+
         if (spawn.spawning) {
             return;
         }
@@ -74,35 +78,35 @@ const roleSpawn = {
             }
         }
 
-        if (attackerLength < spawnConfig.attacker) {
+        if (attackerLength < Memory.spawnConfig.attacker) {
             const result = spawn.spawnCreep(this.getAttackerBody(spawn), "fishbot.attacker-" + Math.ceil(Math.random() * 10000), {memory: {role: "attacker"}});
             if ((result === OK)) {
                 spawned = "attacker";
             }
         }
 
-        if (repairerLength < spawnConfig.repairer) {
+        if (repairerLength < Memory.spawnConfig.repairer) {
             const result = spawn.spawnCreep(this.getBuilderBody(spawn), "fishbot.repairer-" + Math.ceil(Math.random() * 10000), {memory: {role: "repairer"}});
             if ((result === OK)) {
                 spawned = "repairer";
             }
         }
 
-        if (scavengerLength < spawnConfig.scavenger && spawn.room.find(FIND_MY_STRUCTURES, {filter : {structureType : STRUCTURE_STORAGE}}).length) {
+        if (scavengerLength < Memory.spawnConfig.scavenger && spawn.room.find(FIND_MY_STRUCTURES, {filter : {structureType : STRUCTURE_STORAGE}}).length) {
             const result = spawn.spawnCreep(this.getFeederBody(spawn), "fishbot.scavenger-" + Math.ceil(Math.random() * 10000), {memory: {role : "scavenger"}});
             if ((result === OK)) {
                 spawned = "scavenger";
             }
         }
 
-        if (builderLength < spawnConfig.builder) {
+        if (builderLength < Memory.spawnConfig.builder) {
             const result = spawn.spawnCreep(this.getBuilderBody(spawn), "fishbot.builder-" + Math.ceil(Math.random() * 10000), {memory: {role: "builder"}});
             if ((result === OK)) {
                 spawned = "builder";
             }
         }
 
-        if (upgraderLength < spawnConfig.upgrader) {
+        if (upgraderLength < Memory.spawnConfig.upgrader) {
             const result = spawn.spawnCreep(this.getUpgraderBody(spawn), "fishbot.upgrader-" + Math.ceil(Math.random() * 10000), {memory: {role: "upgrader"}});
             if ((result === OK)) {
                 spawned = "upgrader";
@@ -116,7 +120,7 @@ const roleSpawn = {
             }
         }
 
-        if (feederLength < spawnConfig.feeder) {
+        if (feederLength < Memory.spawnConfig.feeder) {
             const result = spawn.spawnCreep(this.getFeederBody(spawn), "fishbot.feeder-" + Math.ceil(Math.random() * 10000), {memory: {role: "feeder"}});
             if (result === OK) {
                 spawned = "feeder";
