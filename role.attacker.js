@@ -54,7 +54,7 @@ module.exports = {
             const room = creep.memory.room;
 
             let success = false;
-            if (x && y) {
+            if (x && y && room) {
                 const result = creep.moveTo(new RoomPosition(x, y, room));
                 if (result == OK || result == ERR_TIRED) {
                     success = true;
