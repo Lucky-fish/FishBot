@@ -76,6 +76,10 @@ const resourceFinding = {
             creep.memory.s = source.id;
         }
         source = Game.getObjectById(creep.memory.s);
+        if (!creep.memory.s) {
+            delete creep.memory.s;
+            return;
+        }
         if (source.structureType) {
             if (creep.withdraw(source, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(source);
