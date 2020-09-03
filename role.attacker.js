@@ -7,6 +7,7 @@
  * mod.thing == 'a thing'; // true
  */
 
+const roomManager = require("room.manager");
 module.exports = {
     run : function(creep) {
         let exe = false;
@@ -50,10 +51,11 @@ module.exports = {
             // move randomly
             const x = creep.memory.targetX;
             const y = creep.memory.targetY;
+            const room = creep.memory.room;
 
             let success = false;
             if (x && y) {
-                const result = creep.moveTo(x, y);
+                const result = creep.moveTo(new RoomPosition(x, y, room));
                 if (result == OK || result == ERR_TIRED) {
                     success = true;
                 }
@@ -62,6 +64,7 @@ module.exports = {
             if ((Math.abs(creep.pos.x - x) < 1 && Math.abs(creep.pos.y - y) < 1) || (!success)) {
                 creep.memory.targetX = Math.floor(Math.random() * 45) + 2;
                 creep.memory.targetY = Math.floor(Math.random() * 45) + 2;
+                creep.memory.room = roomManager.randomRoom();
             }
         }
     }

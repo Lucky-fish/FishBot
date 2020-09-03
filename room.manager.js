@@ -88,5 +88,10 @@ module.exports = {
                 return room.controller;
             }
         }
+    },
+    randomRoom : function() {
+        const ownRoom = this.getOwnRoom();
+        const index = Math.floor(Math.random() * ownRoom);
+        return ownRoom[index];
     }
 };
