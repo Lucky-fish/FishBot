@@ -19,6 +19,7 @@ module.exports.loop = function () {
         Game.cpu.generatePixel();
     }
 
+    console.time("tickSpawn");
     for (let i in Game.spawns) {
         const spawn = Game.spawns[i];
         roleSpawn.run(spawn);
@@ -27,7 +28,9 @@ module.exports.loop = function () {
             spawn.room.controller.activateSafeMode();
         }
     }
+    console.timeEnd("tickSpawn")
 
+    console.time("cleanup");
     for (let i in Memory.creeps) {
         let spawning = false;
         for (let j in Game.spawns) {
@@ -48,7 +51,9 @@ module.exports.loop = function () {
             delete Memory.creeps[i];
         }
     }
-    
+    console.timeEnd("cleanup");
+
+    console.time("tower");
     for (let i in Game.structures) {
         const structure = Game.structures[i];
 
@@ -56,7 +61,9 @@ module.exports.loop = function () {
             tower.run(structure);
         }
     }
+    console.timeEnd("tower");
 
+    console.time("creep");
     for(let name in Game.creeps) {
         const creep = Game.creeps[name];
         // these code will be disabled after the picker spawns.
@@ -89,4 +96,5 @@ module.exports.loop = function () {
             roleFeeder.run(creep);
         }
     }
+    console.timeEnd("creep");
 }
