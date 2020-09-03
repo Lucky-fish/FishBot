@@ -76,7 +76,7 @@ const resourceFinding = {
             creep.memory.s = source.id;
         }
         source = Game.getObjectById(creep.memory.s);
-        if (!creep.memory.s) {
+        if (!source) {
             delete creep.memory.s;
             return;
         }
