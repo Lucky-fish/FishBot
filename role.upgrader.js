@@ -11,11 +11,11 @@ const roleUpgrader = {
         if (creep.memory.a) {
             const controller = roomManager.getOwnController();
             if (creep.upgradeController(controller) === ERR_NOT_IN_RANGE) {
-                creep.moveTo(creep.room.controller);
+                creep.moveTo(controller);
             }
             if ((!controller.sign) || (controller.sign.username !== "Death_fish")) {
                 if (creep.signController(controller, "喵") === ERR_NOT_IN_RANGE) {
-                    creep.moveTo(creep.room.controller);
+                    creep.moveTo(controller);
                 }
             }
         } else {
