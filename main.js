@@ -17,8 +17,13 @@ module.exports.loop = function () {
         Game.cpu.generatePixel();
     }
 
+    const creepsBeingSpawned = [];
+
     for (let i in Game.spawns) {
         const spawn = Game.spawns[i];
+        if (spawn.spawning) {
+            creepsBeingSpawned.push(spawn.spawning.name);
+        }
         roleSpawn.run(spawn);
 
         if (spawn.room.find(FIND_HOSTILE_CREEPS).length > 2 && (!spawn.room.controller.safeMode)) { // it seems that there is raid taken place here
@@ -27,13 +32,7 @@ module.exports.loop = function () {
     }
 
     for (let i in Memory.creeps) {
-        let spawning = false;
-        for (let j in Game.spawns) {
-            if (Game.spawns[j].spawning && Game.spawns[j].spawning.name == i) {
-                spawning = true;
-            }
-        }
-        if (spawning) {
+        if (creepsBeingSpawned.indexOf(i) !== -1) {
             continue;
         }
 
@@ -57,6 +56,9 @@ module.exports.loop = function () {
 
     for(let name in Game.creeps) {
         const creep = Game.creeps[name];
+        if (creepsBeingSpawned.indexOf(name) !== -1) {
+            continue;
+        }
         // these code will be disabled after the picker spawns.
         if (creep.pos.findInRange(FIND_DROPPED_RESOURCES, 4).length) {
             creep.pickup(creep.pos.findInRange(FIND_DROPPED_RESOURCES, 4)[0]);
