@@ -42,7 +42,7 @@ module.exports.loop = function () {
         if (!Game.creeps[i]) {
             const mem = Memory.creeps[i];
             if (mem.role === "claimer" && mem.reserving) {
-                roleSpawn.putClaimerSpawnTask({role : "claimer", reserving : true, targetRoomName : mem.targetRoomName}, (spawn) => roleSpawn.getClaimerBody(spawn));
+                roleSpawn.putSpawnTask({role : "claimer", reserving : true, targetRoomName : mem.targetRoomName}, (spawn) => roleSpawn.getClaimerBody(spawn));
             }
             console.log("Deleting memory: " + i)
             delete Memory.creeps[i];

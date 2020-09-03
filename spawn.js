@@ -30,18 +30,6 @@ const roleSpawn = {
             return;
         }
 
-        if (!spawn.memory.checkTime) {
-            spawn.memory.checkTime = 0;
-        }
-        if (spawn.memory.checkTime > 50) {
-            if (this.shouldSpawnClaimer(spawn)) {
-                if (spawn.spawnCreep(this.getClaimerBody(spawn), "fishbot.claimer-" + Math.ceil(Math.random() * 10000), {memory: {role: "claimer"}}) === OK) {
-                    return;
-                }
-            }
-            spawn.memory.checkTime = 0;
-        }
-
         if (!spawn.memory.tasks) {
             spawn.memory.tasks = [];
         }
@@ -132,7 +120,7 @@ const roleSpawn = {
             console.log("Spawning: " + spawned);
         }
     },
-    putClaimerSpawnTask : function(memory, bodyFetch) {
+    putSpawnTask : function(memory, bodyFetch) {
         for (let i in Game.spawns) {
             const spawn = Game.spawns[i];
             spawn.memory.tasks.push({body : bodyFetch(spawn), memory : memory});
@@ -266,43 +254,6 @@ const roleSpawn = {
         }
 
         return body;
-    },
-    shouldSpawnClaimer : function(spawn) {
-        let energyProduce = 0;
-        const harvesters = _.filter(Game.creeps, (creep) => creep.memory.role === 'harvester' && creep.ticksToLive > 50);
-        for (let i in harvesters) {
-            const harvester = harvesters[i];
-            for (let j in harvester.body) {
-                const type = harvester.body[j].type;
-                if (energyProduce > (3000 / 300) * roomManager.find(FIND_SOURCES).length) {
-                    energyProduce = (3000 / 300) * roomManager.find(FIND_SOURCES).length;
-                    break;
-                }
-
-                if (type == WORK) {
-                    energyProduce += 2;
-                }
-            }
-        }
-
-        let energyConsume = 0;
-
-        const consumers = _.filter(Game.creeps, (creep) => creep.memory.role === 'builder' || creep.memory.role === 'upgrader' || creep.memory.role === 'repairer');
-        // calculate their consumes.
-        for (let i in consumers) {
-            const consumer = consumers[i];
-            for (let j in consumer.body) {
-                const type = consumer.body[j].type;
-                if (energyConsume >= energyProduce) {
-                    return true;
-                }
-
-                if (type == WORK) { // they need to move.
-                    energyConsume += 0.25;
-                }
-            }
-        }
-        return energyConsume >= energyProduce;
     },
     getBodyCost : function(parts) {
         var cost = 0;
