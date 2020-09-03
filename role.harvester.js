@@ -11,10 +11,11 @@ const spawn = require("spawn");
 
 module.exports = {
     run : function(creep) {
-        if (creep.ticksToLive < 50) {
+        if (creep.ticksToLive < 50 && (!creep.memory.spawnScheduled)) {
             spawn.putSpawnTask(JSON.parse(JSON.stringify(creep.memory)), function(spawnIn) {
                 return spawn.getHarvesterBody(spawnIn);
             });
+            creep.memory.spawnScheduled = true;
         }
 
         const source = lookForSource.lockFinding(creep);
