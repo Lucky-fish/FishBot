@@ -79,7 +79,7 @@ module.exports.loop = function () {
             roleScavenger.run(creep);
         } else if (creep.memory.role == "attacker") {
             roleAttacker.run(creep);
-        } else if (reep.memory.role == "repairer->storage") {
+        } else if (creep.memory.role == "repairer->storage") {
             roleStorageRepairer.run(creep);
         } else if (creep.memory.role == "claimer") {
             roleClaimer.run(creep);
