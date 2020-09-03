@@ -79,5 +79,14 @@ module.exports = {
         } else {
             return this.getOwnRoom().indexOf(room.name) === -1;
         }
+    },
+    getOwnController : function() {
+        const rooms = this.getOwnRoom();
+        for (var i in rooms) {
+            const room = Game.rooms[rooms[i]];
+            if (room.controller && room.controller.my) {
+                return room.controller;
+            }
+        }
     }
 };

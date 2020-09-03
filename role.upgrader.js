@@ -1,5 +1,6 @@
 const lookForSource = require("resource");
 const commons = require("commons");
+const roomManager = require("room.manager");
 
 const roleUpgrader = {
 
@@ -8,7 +9,7 @@ const roleUpgrader = {
         commons.updateEnergy(creep);
 
         if (creep.memory.a) {
-            const controller = creep.room.controller;
+            const controller = roomManager.getOwnController();
             if (creep.upgradeController(controller) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(creep.room.controller);
             }
