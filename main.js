@@ -12,15 +12,11 @@ const roleSpawn = require('spawn');
 
 const tower = require("tower");
 
-const roomManager = require('room.manager');
-const profile = require("profile");
-
 module.exports.loop = function () {
     if (Game.cpu.bucket === 10000) {
         Game.cpu.generatePixel();
     }
 
-    let profileSession = profile.start("spawn");
     for (let i in Game.spawns) {
         const spawn = Game.spawns[i];
         roleSpawn.run(spawn);
@@ -29,9 +25,7 @@ module.exports.loop = function () {
             spawn.room.controller.activateSafeMode();
         }
     }
-    profile.end(profileSession);
 
-    profileSession = profile.start("cleanup");
     for (let i in Memory.creeps) {
         let spawning = false;
         for (let j in Game.spawns) {
@@ -52,9 +46,7 @@ module.exports.loop = function () {
             delete Memory.creeps[i];
         }
     }
-    profile.end(profileSession);
 
-    profileSession = profile.start("tower");
     for (let i in Game.structures) {
         const structure = Game.structures[i];
 
@@ -62,9 +54,7 @@ module.exports.loop = function () {
             tower.run(structure);
         }
     }
-    profile.end(profileSession);
 
-    profileSession = profile.start("creep");
     for(let name in Game.creeps) {
         const creep = Game.creeps[name];
         // these code will be disabled after the picker spawns.
@@ -89,7 +79,7 @@ module.exports.loop = function () {
             roleScavenger.run(creep);
         } else if (creep.memory.role == "attacker") {
             roleAttacker.run(creep);
-        } else if (creep.memory.role == "fixer->storage" || creep.memory.role == "repairer->storage") {
+        } else if (reep.memory.role == "repairer->storage") {
             roleStorageRepairer.run(creep);
         } else if (creep.memory.role == "claimer") {
             roleClaimer.run(creep);
@@ -97,5 +87,4 @@ module.exports.loop = function () {
             roleFeeder.run(creep);
         }
     }
-    profile.end(profileSession);
 }

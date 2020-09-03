@@ -50,7 +50,7 @@ const roleSpawn = {
         const repairerLength = _.filter(Game.creeps, (creep) => creep.memory.role === 'repairer').length;
         const scavengerLength = _.filter(Game.creeps, (creep) => creep.memory.role === 'scavenger').length;
         const attackerLength = _.filter(Game.creeps, (creep) => creep.memory.role === "attacker").length;
-        const storageRepairerLength = _.filter(Game.creeps, (creep) => creep.memory.role === "repairer->storage").length + _.filter(Game.creeps, (creep) => creep.memory.role === "fixer->storage").length;
+        const storageRepairerLength = _.filter(Game.creeps, (creep) => creep.memory.role === "repairer->storage").length;
         const harvesterLength = _.filter(Game.creeps, (creep) => creep.memory.role === 'harvester').length;
 
         const containerLength = Math.min(roomManager.find(FIND_SOURCES).length, roomManager.find(FIND_STRUCTURES, {filter: function (e) {
