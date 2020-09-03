@@ -80,7 +80,7 @@ const roleSpawn = {
             }
         }
 
-        if (scavengerLength < Memory.spawnConfig.scavenger && spawn.room.find(FIND_MY_STRUCTURES, {filter : {structureType : STRUCTURE_STORAGE}}).length) {
+        if (scavengerLength < Memory.spawnConfig.scavenger) {
             const result = spawn.spawnCreep(this.getFeederBody(spawn), "fishbot.scavenger-" + Math.ceil(Math.random() * 10000), {memory: {role : "scavenger"}});
             if ((result === OK)) {
                 spawned = "scavenger";

@@ -9,6 +9,7 @@
 const utils = require("utils");
 const roomManger = require("room.manager");
 const commons = require("commons");
+const roleUpgrader = require("role.upgrader");
 
 module.exports = {
     run : function(creep) {
@@ -94,6 +95,8 @@ module.exports = {
                     }
                     return;
                 }
+            } else {
+                roleUpgrader.run(creep);
             }
         }
     }
