@@ -62,9 +62,24 @@ module.exports = {
             }
 
             if ((Math.abs(creep.pos.x - x) < 1 && Math.abs(creep.pos.y - y) < 1) || (!success)) {
-                creep.memory.targetX = Math.floor(Math.random() * 45) + 2;
-                creep.memory.targetY = Math.floor(Math.random() * 45) + 2;
-                creep.memory.room = roomManager.randomRoom();
+                let invalid = false;
+                do {
+                    invalid = false;
+                    creep.memory.targetX = Math.floor(Math.random() * 45) + 2;
+                    creep.memory.targetY = Math.floor(Math.random() * 45) + 2;
+                    creep.memory.room = roomManager.randomRoom();
+
+                    const terrain = new Room.Terrain(creep.memory.room);
+                    invalid = terrain.get(creep.memory.targetX, creep.memory.targetY) == TERRAIN_MASK_WALL;
+                    const look = new RoomPosition(x, y, room).look();
+                    for (let i in look) {
+                        const r = look[i];
+                        invalid = invalid || (r.type == LOOK_STRUCTURES && r.structure.structureType == "constructedWall");
+                        if (invalid) {
+                            break;
+                        }
+                    }
+                } while (invalid);
             }
         }
     }
