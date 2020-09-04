@@ -4,6 +4,7 @@ const commons = {
             creep.memory.a = false;
         } else if (!creep.memory.a && creep.store.getUsedCapacity() === creep.store.getCapacity()) {
             creep.memory.a = true;
+            delete creep.memory.s;
         }
     }
 };
