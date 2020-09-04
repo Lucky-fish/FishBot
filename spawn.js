@@ -33,16 +33,6 @@ const roleSpawn = {
         if (!spawn.memory.tasks) {
             spawn.memory.tasks = [];
         }
-        if (spawn.memory.tasks.length) {
-            const task = spawn.memory.tasks[0];
-            let body = task.body;
-            let memory = JSON.parse(JSON.stringify(task.memory));
-
-            if (spawn.spawnCreep(body, "fishbot-" + Math.ceil(Math.random() * 10000), {memory: memory}) === OK) {
-                spawn.memory.tasks.shift();
-                return;
-            }
-        }
 
         const feederLength = _.filter(Game.creeps, (creep) => creep.memory.role === 'feeder').length;
         const builderLength = _.filter(Game.creeps, (creep) => creep.memory.role === 'builder').length;
@@ -60,6 +50,17 @@ const roleSpawn = {
         let spawned = null;
 
         if (feederLength > 2) {
+            if (spawn.memory.tasks.length) {
+                const task = spawn.memory.tasks[0];
+                let body = task.body;
+                let memory = JSON.parse(JSON.stringify(task.memory));
+
+                if (spawn.spawnCreep(body, "fishbot-" + Math.ceil(Math.random() * 10000), {memory: memory}) === OK) {
+                    spawn.memory.tasks.shift();
+                    return;
+                }
+            }
+
             if (storageRepairerLength < containerLength) {
                 const result = spawn.spawnCreep([WORK, WORK, WORK, CARRY, MOVE, MOVE], "fishbot.storage-repairer-" + Math.ceil(Math.random() * 10000), {memory: {role: "repairer->storage"}});
                 if ((result === OK)) {
