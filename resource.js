@@ -15,19 +15,19 @@ const resourceFinding = {
         const containers = roomManager.find(FIND_STRUCTURES, {filter: function (a) {
                 return (a.structureType === STRUCTURE_CONTAINER || a.structureType === STRUCTURE_STORAGE) && a.store[RESOURCE_ENERGY] > creep.store.getFreeCapacity();
             }});
-
-        let cs = null;
-        if (containers.length) {
-            for (var i in containers) {
-                const c = containers[i];
-                if (c.store && (cs == null || c.store[RESOURCE_ENERGY] > cs.store[RESOURCE_ENERGY])) {
-                    if (!cs || (Math.abs(c.store[RESOURCE_ENERGY] - cs.store[RESOURCE_ENERGY]) > 100)) {
-                        cs = c;
-                    }
-                }
-
+        containers.sort(function(a, b) {
+            if (a.room != creep.room) {
+                return 1;
             }
-            return cs;
+            if (b.room != creep.room) {
+                return -1;
+            }
+
+            return a.store[RESOURCE_ENERGY] - b.store[RESOURCE_ENERGY];
+        });
+
+        if (containers.length) {
+            return containers[0];
         }
 
         const sources = roomManager.find(FIND_SOURCES);
@@ -49,8 +49,6 @@ const resourceFinding = {
         if (creep.memory.lockedResourceId != null) {
             return Game.getObjectById(creep.memory.lockedResourceId);
         }
-
-        const sources = roomManager.find(FIND_SOURCES);
 
         for (let i in sources) {
             let locked = false;
