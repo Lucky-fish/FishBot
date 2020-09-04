@@ -7,6 +7,7 @@ const roleAttacker = require('role.attacker');
 const roleStorageRepairer = require("role.repairer.storage");
 const roleFeeder = require('role.feeder');
 const roleClaimer = require('role.claimer');
+const roleDismantler = require("role.dismantler");
 
 const roleSpawn = require('spawn');
 
@@ -85,6 +86,8 @@ module.exports.loop = function () {
             roleStorageRepairer.run(creep);
         } else if (creep.memory.role == "claimer") {
             roleClaimer.run(creep);
+        } else if (creep.memory.role == "dismantler") {
+            roleDismantler.run(creep);
         } else if (creep.memory.role == 'feeder') {
             roleFeeder.run(creep);
         }
