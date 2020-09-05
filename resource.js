@@ -22,6 +22,12 @@ const resourceFinding = {
             if (b.room != creep.room) {
                 return -1;
             }
+            if (a.structureType == STRUCTURE_STORAGE) {
+                return 1;
+            }
+            if (b.structureType == STRUCTURE_STORAGE) {
+                return -1;
+            }
 
             return a.store[RESOURCE_ENERGY] - b.store[RESOURCE_ENERGY];
         });
