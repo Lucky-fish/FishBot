@@ -60,46 +60,47 @@ const roleSpawn = {
                     return;
                 }
             }
-
-            if (storageRepairerLength < containerLength) {
-                const result = spawn.spawnCreep([WORK, WORK, WORK, CARRY, MOVE, MOVE], "fishbot.storage-repairer-" + Math.ceil(Math.random() * 10000), {memory: {role: "repairer->storage"}});
-                if ((result === OK)) {
-                    spawned = "repairer->storager";
+            if (harvesterLength > 1) {
+                if (storageRepairerLength < containerLength) {
+                    const result = spawn.spawnCreep([WORK, WORK, WORK, CARRY, MOVE, MOVE], "fishbot.storage-repairer-" + Math.ceil(Math.random() * 10000), {memory: {role: "repairer->storage"}});
+                    if ((result === OK)) {
+                        spawned = "repairer->storager";
+                    }
                 }
-            }
 
-            if (attackerLength < Memory.spawnConfig.attacker) {
-                const result = spawn.spawnCreep(this.getAttackerBody(spawn), "fishbot.attacker-" + Math.ceil(Math.random() * 10000), {memory: {role: "attacker"}});
-                if ((result === OK)) {
-                    spawned = "attacker";
+                if (attackerLength < Memory.spawnConfig.attacker) {
+                    const result = spawn.spawnCreep(this.getAttackerBody(spawn), "fishbot.attacker-" + Math.ceil(Math.random() * 10000), {memory: {role: "attacker"}});
+                    if ((result === OK)) {
+                        spawned = "attacker";
+                    }
                 }
-            }
 
-            if (repairerLength < Memory.spawnConfig.repairer) {
-                const result = spawn.spawnCreep(this.getBuilderBody(spawn), "fishbot.repairer-" + Math.ceil(Math.random() * 10000), {memory: {role: "repairer"}});
-                if ((result === OK)) {
-                    spawned = "repairer";
+                if (repairerLength < Memory.spawnConfig.repairer) {
+                    const result = spawn.spawnCreep(this.getBuilderBody(spawn), "fishbot.repairer-" + Math.ceil(Math.random() * 10000), {memory: {role: "repairer"}});
+                    if ((result === OK)) {
+                        spawned = "repairer";
+                    }
                 }
-            }
 
-            if (scavengerLength < Memory.spawnConfig.scavenger) {
-                const result = spawn.spawnCreep(this.getFeederBody(spawn), "fishbot.scavenger-" + Math.ceil(Math.random() * 10000), {memory: {role: "scavenger"}});
-                if ((result === OK)) {
-                    spawned = "scavenger";
+                if (scavengerLength < Memory.spawnConfig.scavenger) {
+                    const result = spawn.spawnCreep(this.getFeederBody(spawn), "fishbot.scavenger-" + Math.ceil(Math.random() * 10000), {memory: {role: "scavenger"}});
+                    if ((result === OK)) {
+                        spawned = "scavenger";
+                    }
                 }
-            }
 
-            if (builderLength < Memory.spawnConfig.builder) {
-                const result = spawn.spawnCreep(this.getBuilderBody(spawn), "fishbot.builder-" + Math.ceil(Math.random() * 10000), {memory: {role: "builder"}});
-                if ((result === OK)) {
-                    spawned = "builder";
+                if (builderLength < Memory.spawnConfig.builder) {
+                    const result = spawn.spawnCreep(this.getBuilderBody(spawn), "fishbot.builder-" + Math.ceil(Math.random() * 10000), {memory: {role: "builder"}});
+                    if ((result === OK)) {
+                        spawned = "builder";
+                    }
                 }
-            }
 
-            if (upgraderLength < Memory.spawnConfig.upgrader) {
-                const result = spawn.spawnCreep(this.getUpgraderBody(spawn), "fishbot.upgrader-" + Math.ceil(Math.random() * 10000), {memory: {role: "upgrader"}});
-                if ((result === OK)) {
-                    spawned = "upgrader";
+                if (upgraderLength < Memory.spawnConfig.upgrader) {
+                    const result = spawn.spawnCreep(this.getUpgraderBody(spawn), "fishbot.upgrader-" + Math.ceil(Math.random() * 10000), {memory: {role: "upgrader"}});
+                    if ((result === OK)) {
+                        spawned = "upgrader";
+                    }
                 }
             }
         }
