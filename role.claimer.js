@@ -19,6 +19,9 @@ const claimer = {
                 creep.memory.target = creep.pos.findClosestByPath(Game.map.findExit(creep.room, targetRoomName), {algorithm: "astar"});
             }
             const target = creep.memory.target;
+            if (!target) {
+                return; // wait for next tick to find room.
+            }
             creep.moveTo(new RoomPosition(target.x, target.y, target.roomName));
         } else {
             const controller = creep.room.controller;
