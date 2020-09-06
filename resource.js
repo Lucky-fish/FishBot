@@ -55,6 +55,9 @@ const resourceFinding = {
         if (creep.memory.lockedResourceId != null) {
             return Game.getObjectById(creep.memory.lockedResourceId);
         }
+        const sources = roomManager.find(FIND_SOURCES, {filter: function (e) {
+                return e.energy > 0;
+            }})
 
         for (let i in sources) {
             let locked = false;
