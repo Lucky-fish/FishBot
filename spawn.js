@@ -60,7 +60,7 @@ const roleSpawn = {
                     return;
                 }
             }
-            if (harvesterLength > 1) {
+            if (harvesterLength > 1 || containerLength < 1) {
                 if (storageRepairerLength < containerLength) {
                     const result = spawn.spawnCreep([WORK, WORK, WORK, CARRY, MOVE, MOVE], "fishbot.storage-repairer-" + Math.ceil(Math.random() * 10000), {memory: {role: "repairer->storage"}});
                     if ((result === OK)) {
