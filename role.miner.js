@@ -1,4 +1,5 @@
 const commons = require("commons");
+const roomManager = require("room.manager");
 
 const miner = {
     run : function(creep) {
@@ -23,12 +24,14 @@ const miner = {
                     creep.moveTo(exit);
                 }
             } else {
-                const found = roomManger.find(FIND_MY_STRUCTURES, {filter : function (e) {
-                        return e.structureType === STRUCTURE_STORAGE;
-                    }});
-
+                if (creep.harvest(target) === ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target);
+                }
             }
         } else {
+            const found = roomManager.find(FIND_MY_STRUCTURES, {filter : function (e) {
+                    return e.structureType === STRUCTURE_STORAGE;
+                }});
             for (let j in found) {
                 const storage = found[j];
                 if (storage.store.getFreeCapacity() <= 0) {
