@@ -19,6 +19,9 @@ module.exports = {
             let found = roomManger.find(FIND_TOMBSTONES, {filter: function (v) {
                     return v.store.getUsedCapacity() > 0;
                 }});
+            found.sort(function(a,b) { // prefers further.
+                return utils.distance(b.pos, creep.pos) - utils.distance(a.pos, creep.pos);
+            });
             if (found.length) {
                 const target = found[0];
                 if (creep.pickup(target) === ERR_NOT_IN_RANGE) {
@@ -37,6 +40,9 @@ module.exports = {
                     found = roomManger.find(FIND_RUINS, {filter: function (v) {
                             return v.store.getUsedCapacity() > 0;
                         }});
+                    found.sort(function(a,b) { // prefers further.
+                        return utils.distance(b.pos, creep.pos) - utils.distance(a.pos, creep.pos);
+                    });
                     if (found.length) {
                         for (let i in found[0].store) {
                             if (creep.withdraw(found[0], i) === ERR_NOT_IN_RANGE) {
