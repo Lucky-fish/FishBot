@@ -28,19 +28,20 @@ module.exports = {
             });
             if (found.length) {
                 const target = found[0];
-                if (creep.withdraw(target) === ERR_NOT_IN_RANGE) {
-                    creep.moveTo(target);
+                for (let i in found[0].store) {
+                    if (creep.withdraw(found[0], i) === ERR_NOT_IN_RANGE) {
+                        creep.moveTo(found[0]);
+                        return;
+                    }
                 }
+
             } else {
                 found = roomManger.find(FIND_DROPPED_RESOURCES, {filter: function(v) {
                     return v.amount >= 10;
                     }});
                 if (found.length) {
-                    for (let i in found[0].store) {
-                        if (creep.pickup(found[0], i) === ERR_NOT_IN_RANGE) {
-                            creep.moveTo(found[0]);
-                            return;
-                        }
+                    if (creep.withdraw(target) === ERR_NOT_IN_RANGE) {
+                        creep.moveTo(target);
                     }
                 } else {
                     found = roomManger.find(FIND_RUINS, {filter: function (v) {
