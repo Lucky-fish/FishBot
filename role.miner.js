@@ -42,6 +42,7 @@ const miner = {
                 for (let i in creep.store) {
                     if (creep.transfer(storage, i) === ERR_NOT_IN_RANGE) {
                         if (creep.room !== storage.room) {
+                            creep.move(RIGHT);
                             const route = Game.map.findRoute(creep.room, storage.room, {
                                 routeCallback(roomName) {
                                     if (roomName == "E13N29") {
