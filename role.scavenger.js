@@ -19,6 +19,8 @@ module.exports = {
             creep.suicide();
         }
 
+        console.log(!(creep.memory.working) && creep.ticksToLive > 200)
+
         if (!(creep.memory.working) && creep.ticksToLive > 200) {
             let found = roomManger.find(FIND_TOMBSTONES, {filter: function (v) {
                     return v.store.getUsedCapacity() > 0;
