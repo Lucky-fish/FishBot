@@ -4,7 +4,7 @@ const miner = {
     run : function(creep) {
         commons.updateEnergy(creep);
 
-        if (creep.working) {
+        if (!creep.memory.working) {
             creep.move(TOP);
             const room = creep.memory.room;
             const target = Game.getObjectById(creep.memory.target);
