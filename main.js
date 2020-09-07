@@ -58,19 +58,6 @@ module.exports.loop = function () {
 
     for(let name in Game.creeps) {
         const creep = Game.creeps[name];
-        if (creepsBeingSpawned.indexOf(name) !== -1) {
-            continue;
-        }
-        // these code will be disabled after the picker spawns.
-        if (creep.pos.findInRange(FIND_DROPPED_RESOURCES, 4).length) {
-            creep.pickup(creep.pos.findInRange(FIND_DROPPED_RESOURCES, 4)[0]);
-        }
-        if (creep.pos.findInRange(FIND_TOMBSTONES, 4).length) {
-            creep.withdraw(creep.pos.findInRange(FIND_TOMBSTONES, 4).filter((v,i,a) => v.store[RESOURCE_ENERGY] > 0)[0], RESOURCE_ENERGY);
-        }
-        if (creep.pos.findInRange(FIND_RUINS, 4).length) {
-            creep.withdraw(creep.pos.findInRange(FIND_RUINS, 4).filter((v, i, a) => v.store[RESOURCE_ENERGY] > 0)[0], RESOURCE_ENERGY);
-        }
         if(creep.memory.role === 'harvester') {
             roleHarvester.run(creep);
         } else if(creep.memory.role === 'upgrader') {
