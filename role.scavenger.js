@@ -16,16 +16,16 @@ module.exports = {
         commons.updateEnergy(creep);
 
         if (!(creep.memory.a) && creep.ticksToLive > 200) {
-            let found = roomManger.find(FIND_DROPPED_RESOURCES);
+            let found = roomManger.find(FIND_TOMBSTONES, {filter: function (v) {
+                    return v.store.getUsedCapacity() > 0;
+                }});
             if (found.length) {
                 const target = found[0];
                 if (creep.pickup(target) === ERR_NOT_IN_RANGE) {
                     creep.moveTo(target);
                 }
             } else {
-                found = roomManger.find(FIND_TOMBSTONES, {filter: function (v) {
-                        return v.store.getUsedCapacity() > 0;
-                    }});
+                found = roomManger.find(FIND_DROPPED_RESOURCES);
                 if (found.length) {
                     for (let i in found[0].store) {
                         if (creep.withdraw(found[0], i) === ERR_NOT_IN_RANGE) {
