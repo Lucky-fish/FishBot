@@ -41,7 +41,7 @@ module.exports = {
                     }});
                 const target = found[0];
                 if (found.length) {
-                    if (creep.withdraw(target) === ERR_NOT_IN_RANGE) {
+                    if (creep.pickup(target) === ERR_NOT_IN_RANGE) {
                         creep.moveTo(target);
                     }
                 } else {
