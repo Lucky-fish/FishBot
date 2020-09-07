@@ -40,7 +40,22 @@ const miner = {
 
                 for (let i in creep.store) {
                     if (creep.transfer(storage, i) === ERR_NOT_IN_RANGE) {
-                        creep.moveTo(storage);
+                        if (creep.room !== storage.room) {
+                            const route = Game.map.findRoute(creep.room, storage.room, {
+                                routeCallback(roomName) {
+                                    if (roomName == "E13N29") {
+                                        return Infinity;
+                                    }
+                                    return 1;
+                                }
+                            });
+                            if(route.length > 0) {
+                                const exit = creep.pos.findClosestByRange(route[0].exit);
+                                creep.moveTo(exit);
+                            }
+                        } else {
+                            creep.moveTo(storage);
+                        }
                     }
                 }
                 return;
