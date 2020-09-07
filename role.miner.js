@@ -24,6 +24,7 @@ const miner = {
                     creep.moveTo(exit);
                 }
             } else {
+                creep.cancelOrder("move");
                 if (creep.harvest(target) === ERR_NOT_IN_RANGE) {
                     creep.moveTo(target);
                 }
