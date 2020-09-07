@@ -10,7 +10,14 @@ const miner = {
             const target = Game.getObjectById(creep.memory.target);
 
             if (!target.room) {
-                const route = Game.map.findRoute(creep.room, room);
+                const route = Game.map.findRoute(creep.room, room, {
+                    routeCallback(roomName) {
+                        if (roomName == "E13N29") {
+                            return Infinity;
+                        }
+                        return 1;
+                    }
+                });
                 if(route.length > 0) {
                     const exit = creep.pos.findClosestByRange(route[0].exit);
                     creep.moveTo(exit);
