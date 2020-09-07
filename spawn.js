@@ -7,15 +7,14 @@
  * mod.thing == 'a thing'; // true
  */
 
-const maxEnergyUse = 800;
-
 const spawnConfig = {
     attacker: 0,
     repairer: 2,
     scavenger: 1,
     builder: 2,
     upgrader: 1,
-    feeder: 3
+    feeder: 3,
+    maxSpawnEnergy: 800
 };
 
 const roomManager = require("room.manager");
@@ -24,6 +23,11 @@ const roleSpawn = {
     run: function (spawn) {
         if (!Memory.spawnConfig) {
             Memory.spawnConfig = spawnConfig;
+        }
+        for (let i in spawnConfig) {
+            if (!Memory.spawnConfig[i]) {
+                Memory.spawnConfig[i] = spawnConfig[i];
+            }
         }
 
         if (spawn.spawning) {
@@ -133,7 +137,7 @@ const roleSpawn = {
     },
     getAvailableEnergy : function (spawn, limited = true) {
         if (limited) {
-            return Math.min(maxEnergyUse, spawn.room.energyCapacityAvailable);
+            return Math.min(Memory.spawnConfig.maxSpawnEnergy, spawn.room.energyCapacityAvailable);
         } else {
             return spawn.room.energyCapacityAvailable;
         }

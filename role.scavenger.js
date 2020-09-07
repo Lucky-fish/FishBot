@@ -15,7 +15,11 @@ module.exports = {
     run : function(creep) {
         commons.updateEnergy(creep);
 
-        if (!(creep.memory.a) && creep.ticksToLive > 200) {
+        if (!(creep.memory.working) && creep.ticksToLive <= 200) {
+            creep.suicide();
+        }
+
+        if (!(creep.memory.working) && creep.ticksToLive > 200) {
             let found = roomManger.find(FIND_TOMBSTONES, {filter: function (v) {
                     return v.store.getUsedCapacity() > 0;
                 }});

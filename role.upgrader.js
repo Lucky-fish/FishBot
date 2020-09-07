@@ -8,7 +8,7 @@ const roleUpgrader = {
     run: function (creep) {
         commons.updateEnergy(creep);
 
-        if (creep.memory.a) {
+        if (creep.memory.working) {
             const controller = roomManager.getOwnController();
             if (creep.upgradeController(controller) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(controller);

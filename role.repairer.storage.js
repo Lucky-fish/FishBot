@@ -16,7 +16,7 @@ module.exports = {
     run : function(creep) {
 		commons.updateEnergy(creep);
 	    
-	    if (creep.memory.a) {
+	    if (creep.memory.working) {
 			const broken = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (e) => ((e.structureType === STRUCTURE_STORAGE && e.my) || e.structureType === STRUCTURE_CONTAINER) && e.hits < e.hitsMax});
 
 			if (broken) {

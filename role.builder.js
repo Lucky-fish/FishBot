@@ -9,7 +9,7 @@ const roleBuilder = {
 	run: function (creep) {
 		commons.updateEnergy(creep);
 
-		if (creep.memory.a) {
+		if (creep.memory.working) {
 			const targets = roomManager.find(FIND_CONSTRUCTION_SITES);
 			if (targets.length) {
 				if (utils.distance(creep.pos, targets[0].pos) < 3) {

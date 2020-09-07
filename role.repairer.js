@@ -7,7 +7,7 @@ module.exports = {
     run : function(creep) {
 		commons.updateEnergy(creep);
 	    
-	    if (creep.memory.a) {
+	    if (creep.memory.working) {
 	    	delete creep.memory.fixTimer;
 	    	if (creep.memory.fixing) {
 	    		const target = Game.getObjectById(creep.memory.fixing);

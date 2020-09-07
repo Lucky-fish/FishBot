@@ -7,7 +7,7 @@ const roleFeeder = {
     /** @param {Creep} creep **/
     run: function (creep) {
         commons.updateEnergy(creep);
-        if (!creep.memory.a) {
+        if (!creep.memory.working) {
             lookForSource.harvest(creep);
         } else {
             const targets = roomManager.find(FIND_STRUCTURES, {
