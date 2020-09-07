@@ -27,7 +27,7 @@ module.exports = {
                 return utils.distance(b.pos, creep.pos) - utils.distance(a.pos, creep.pos);
             });
             if (found.length) {
-                const target = found[0];
+
                 for (let i in found[0].store) {
                     if (creep.withdraw(found[0], i) === ERR_NOT_IN_RANGE) {
                         creep.moveTo(found[0]);
@@ -39,6 +39,7 @@ module.exports = {
                 found = roomManger.find(FIND_DROPPED_RESOURCES, {filter: function(v) {
                     return v.amount >= 10;
                     }});
+                const target = found[0];
                 if (found.length) {
                     if (creep.withdraw(target) === ERR_NOT_IN_RANGE) {
                         creep.moveTo(target);
