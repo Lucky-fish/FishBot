@@ -26,15 +26,15 @@ module.exports = {
             found.sort(function(a,b) { // prefers further.
                 return utils.distance(b.pos, creep.pos) - utils.distance(a.pos, creep.pos);
             });
-            console.log("tombstone" + found.length)
             if (found.length) {
                 const target = found[0];
                 if (creep.pickup(target) === ERR_NOT_IN_RANGE) {
                     creep.moveTo(target);
                 }
             } else {
-                found = roomManger.find(FIND_DROPPED_RESOURCES);
-                console.log("resource" + found.length)
+                found = roomManger.find(FIND_DROPPED_RESOURCES, {filter: function(v) {
+                    return v.amount >= 10;
+                    }});
                 if (found.length) {
                     for (let i in found[0].store) {
                         if (creep.withdraw(found[0], i) === ERR_NOT_IN_RANGE) {
@@ -49,7 +49,6 @@ module.exports = {
                     found.sort(function(a,b) { // prefers further.
                         return utils.distance(b.pos, creep.pos) - utils.distance(a.pos, creep.pos);
                     });
-                    console.log("ruin" + found.length)
                     if (found.length) {
                         for (let i in found[0].store) {
                             if (creep.withdraw(found[0], i) === ERR_NOT_IN_RANGE) {
@@ -61,7 +60,6 @@ module.exports = {
                         found = roomManger.find(FIND_STRUCTURES, {filter: function (v) {
                                 return v.structureType === STRUCTURE_CONTAINER && v.store.getUsedCapacity() > 0;
                             }});
-                        console.log("container" + found.length)
                         if (found.length) {
                             found.sort(function(a,b) { // prefers further.
                                 return utils.distance(b.pos, creep.pos) - utils.distance(a.pos, creep.pos);
