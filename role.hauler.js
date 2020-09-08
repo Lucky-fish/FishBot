@@ -75,7 +75,7 @@ const hauler = {
                 const target = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: function(target) {
                     return target.structureType == STRUCTURE_CONTAINER && target.store[RESOURCE_ENERGY] > creep.store.getFreeCapacity();
                     }});
-                creep.withdraw(target);
+                console.log(creep.withdraw(target))
             }
         }
     }
