@@ -6,31 +6,6 @@ const hauler = {
     run : function(creep) {
         commons.updateEnergy(creep);
 
-        if (!creep.memory.boundTo) {
-            const harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == "harvester");
-            const others = _.filter(Game.creeps, (ocreep) => ocreep.memory.role == "hauler" && creep != ocreep);
-
-            for (let i in harvesters) {
-                const harvester = harvesters[i];
-                let alreadyBound = false;
-                for (let j in others) {
-                    const other = others[j];
-                    if (other.memory.boundTo == harvester.name) {
-                        alreadyBound = true;
-                    }
-                }
-                if (alreadyBound) {
-                    continue;
-                }
-
-                creep.memory.boundTo = harvester.name;
-            }
-        }
-        if (!Game.creeps[creep.memory.boundTo]) {
-            delete creep.memory.boundTo;
-            return;
-        }
-
         if (creep.memory.working) {
             const found = roomManager.find(FIND_MY_STRUCTURES, {filter : function (e) {
                     return e.structureType == STRUCTURE_STORAGE;
@@ -68,15 +43,12 @@ const hauler = {
                 roleUpgrader.run(creep);
             }
         } else {
-            const boundedCreep = Game.creeps[creep.memory.boundTo]
-            if (utils.distance(creep.pos, boundedCreep.pos) > 2) {
-                creep.moveTo(boundedCreep);
-            } else {
-                const target = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: function(target) {
+            const target = roomManager.find(FIND_STRUCTURES,  {filter: function(target) {
                     return target.structureType == STRUCTURE_CONTAINER && target.store[RESOURCE_ENERGY] > creep.store.getFreeCapacity();
-                    }});
-                if (creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
-                    creep.moveTo(target)
+                }});
+            target.sort((a, b) => a.store[RESOURCE_ENERGY] - b.store[RESOURCE_ENERGY]);
+            if (creep.withdraw(target[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(target[0]);
             }
         }
     }
