@@ -15,7 +15,7 @@ const commands = {
     claim : function(room) {
         for (let i = 0; i < 2; i ++) {
             spawn.putSpawnTask({role : "claimer", targetRoomName : room}, function(s) {
-                return spawn.getClaimerBody(spawn);
+                return spawn.getClaimerBody(s);
             });
         }
         return "Scheduled"
