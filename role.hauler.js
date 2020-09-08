@@ -43,12 +43,20 @@ const hauler = {
                 roleUpgrader.run(creep);
             }
         } else {
-            const target = roomManager.find(FIND_STRUCTURES,  {filter: function(target) {
-                    return target.structureType == STRUCTURE_CONTAINER && target.store[RESOURCE_ENERGY] > creep.store.getFreeCapacity();
-                }});
-            target.sort((a, b) => a.store[RESOURCE_ENERGY] - b.store[RESOURCE_ENERGY]);
-            if (creep.withdraw(target[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(target[0]);
+            if (!creep.memory.target) {
+                const found = roomManager.find(FIND_STRUCTURES, {
+                    filter: function (target) {
+                        return target.structureType == STRUCTURE_CONTAINER && target.store[RESOURCE_ENERGY] > creep.store.getFreeCapacity();
+                    }
+                });
+                found.sort((a, b) => a.store[RESOURCE_ENERGY] - b.store[RESOURCE_ENERGY]);
+                creep.memory.target = found[0].id;
+            }
+            const target = Game.getObjectById(creep.memory.target);
+            if (creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(target);
+            } else {
+                delete creep.memory.target;
             }
         }
     }
