@@ -196,7 +196,7 @@ const roleSpawn = {
         return body;
     },
     getClaimerBody : function(spawn) {
-        const energy = spawn.room.energyCapacityAvailable;
+        const energy = this.getAvailableEnergy(spawn);
         const body = [];
         const unit = this.getBodyCost([MOVE, CLAIM]);
         for (let i = 0; i < Math.floor(energy / unit); i ++) {
