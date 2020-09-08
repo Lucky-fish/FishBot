@@ -25,7 +25,8 @@ const hauler = {
 
                 creep.memory.boundTo = harvester.name;
             }
-        } else if (!Game.creeps[creep.memory.boundTo]) {
+        }
+        if (!Game.creeps[creep.memory.boundTo]) {
             delete creep.memory.boundTo;
             return;
         }
@@ -72,7 +73,7 @@ const hauler = {
                 creep.moveTo(boundedCreep);
             } else {
                 const target = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: function(target) {
-                    target.store[RESOURCE_ENERGY] > creep.store.getFreeCapacity();
+                    return target.structureType == STRUCTURE_CONTAINER && target.store[RESOURCE_ENERGY] > creep.store.getFreeCapacity();
                     }});
                 creep.withdraw(target);
             }
