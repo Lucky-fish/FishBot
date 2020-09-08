@@ -38,7 +38,7 @@ module.exports = {
             return Memory.ownedRooms;
         } else {
             this.cleanRooms();
-            if (Memory.roomCacheTime > 50) {
+            if (Memory.roomCacheTime > 300) {
                 delete Memory.ownedRooms;
                 Memory.roomCacheTime = 0;
                 return this.getOwnRoom();
