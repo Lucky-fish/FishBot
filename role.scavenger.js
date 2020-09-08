@@ -7,7 +7,7 @@
  * mod.thing == 'a thing'; // true
  */
 const utils = require("utils");
-const roomManger = require("room.manager");
+const roomManager = require("room.manager");
 const commons = require("commons");
 const roleUpgrader = require("role.upgrader");
 
@@ -20,7 +20,7 @@ module.exports = {
         }
 
         if (!(creep.memory.working) && creep.ticksToLive > 200) {
-            let found = roomManger.find(FIND_TOMBSTONES, {filter: function (v) {
+            let found = roomManager.find(FIND_TOMBSTONES, {filter: function (v) {
                     return v.store.getUsedCapacity() > 0;
                 }});
             found.sort(function(a,b) { // prefers further.
@@ -36,7 +36,7 @@ module.exports = {
                 }
 
             } else {
-                found = roomManger.find(FIND_DROPPED_RESOURCES, {filter: function(v) {
+                found = roomManager.find(FIND_DROPPED_RESOURCES, {filter: function(v) {
                     return v.amount >= 10;
                     }});
                 const target = found[0];
@@ -45,7 +45,7 @@ module.exports = {
                         creep.moveTo(target);
                     }
                 } else {
-                    found = roomManger.find(FIND_RUINS, {filter: function (v) {
+                    found = roomManager.find(FIND_RUINS, {filter: function (v) {
                             return v.store.getUsedCapacity() > 0;
                         }});
                     found.sort(function(a,b) { // prefers further.
@@ -59,7 +59,7 @@ module.exports = {
                             }
                         }
                     } else {
-                        found = roomManger.find(FIND_STRUCTURES, {filter: function (v) {
+                        found = roomManager.find(FIND_STRUCTURES, {filter: function (v) {
                                 return v.structureType === STRUCTURE_CONTAINER && v.store.getUsedCapacity() > 0;
                             }});
                         if (found.length) {
@@ -77,11 +77,11 @@ module.exports = {
                 }
             }
         } else {
-            const found = roomManger.find(FIND_MY_STRUCTURES, {filter : function (e) {
+            const found = roomManager.find(FIND_MY_STRUCTURES, {filter : function (e) {
                 return e.structureType == STRUCTURE_STORAGE;
                 }});
 
-            const broken = roomManger.find(FIND_STRUCTURES, {
+            const broken = roomManager.find(FIND_STRUCTURES, {
                 filter: function (e) {
                     return e.hits < e.hitsMax;
                 }});

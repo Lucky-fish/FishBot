@@ -46,6 +46,7 @@ const roleSpawn = {
         const attackerLength = _.filter(Game.creeps, (creep) => creep.memory.role === "attacker").length;
         const storageRepairerLength = _.filter(Game.creeps, (creep) => creep.memory.role === "repairer->storage").length;
         const harvesterLength = _.filter(Game.creeps, (creep) => creep.memory.role === 'harvester').length;
+        const haulerLength = _.filter(Game.creeps, (creep) => creep.memory.role === 'hauler').length;
 
         const containerLength = Math.min(roomManager.find(FIND_SOURCES).length, roomManager.find(FIND_STRUCTURES, {filter: function (e) {
             return e.structureType === STRUCTURE_CONTAINER;
@@ -104,6 +105,13 @@ const roleSpawn = {
                     const result = spawn.spawnCreep(this.getUpgraderBody(spawn), "fishbot.upgrader-" + Math.ceil(Math.random() * 10000), {memory: {role: "upgrader"}});
                     if ((result === OK)) {
                         spawned = "upgrader";
+                    }
+                }
+
+                if (haulerLength < harvesterLength) {
+                    const result = spawn.spawnCreep(this.getFeederBody(spawn), "fishbot.hauler-" + Math.ceil(Math.random() * 10000), {memory: {role: "hauler"}});
+                    if (result === OK) {
+                        spawned = "hauler";
                     }
                 }
             }

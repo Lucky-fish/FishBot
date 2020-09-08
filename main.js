@@ -9,6 +9,7 @@ const roleFeeder = require('role.feeder');
 const roleClaimer = require('role.claimer');
 const roleDismantler = require("role.dismantler");
 const roleMiner = require("role.miner");
+const roleHauler = require("role.hauler");
 
 const roleSpawn = require('spawn');
 
@@ -80,6 +81,8 @@ module.exports.loop = function () {
             roleFeeder.run(creep);
         } else if (creep.memory.role === "miner") {
             roleMiner.run(creep);
+        } else if (creep.memory.role === "hauler") {
+            roleHauler.run(creep);
         }
     }
 }
