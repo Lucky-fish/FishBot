@@ -15,7 +15,7 @@ const hauler = {
                 let alreadyBound = false;
                 for (let j in others) {
                     const other = others[j];
-                    if (other.memory.bind == harvester.name) {
+                    if (other.memory.boundTo == harvester.name) {
                         alreadyBound = true;
                     }
                 }
