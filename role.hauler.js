@@ -50,6 +50,9 @@ const hauler = {
                     }
                 });
                 found.sort((a, b) => a.store[RESOURCE_ENERGY] - b.store[RESOURCE_ENERGY]);
+                if (!found.length) {
+                    return;
+                }
                 creep.memory.target = found[0].id;
             }
             const target = Game.getObjectById(creep.memory.target);
