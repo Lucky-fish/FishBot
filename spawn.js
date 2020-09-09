@@ -14,6 +14,7 @@ const spawnConfig = {
     builder: 2,
     upgrader: 1,
     feeder: 3,
+    hauler: 6,
     maxSpawnEnergy: 800
 };
 
@@ -111,7 +112,7 @@ const roleSpawn = {
                     }
                 }
 
-                if (haulerLength < harvesterLength) {
+                if (haulerLength < Memory.spawnConfig.hauler) {
                     const result = spawn.spawnCreep(this.getFeederBody(spawn), "fishbot.hauler-" + Math.ceil(Math.random() * 10000), {memory: {role: "hauler"}});
                     if (result === OK) {
                         spawned = "hauler";
