@@ -38,6 +38,9 @@ module.exports = {
                         creep.moveTo(target);
                     }
                 }
+            } else {
+                const constructSite = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES);
+                creep.build(constructSite);
             }
         }
     }
