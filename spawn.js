@@ -33,6 +33,9 @@ const roleSpawn = {
         if (spawn.spawning) {
             return;
         }
+        if (!this.checkSpawnCooldown(spawn)) {
+            return;
+        }
 
         if (!spawn.memory.tasks) {
             spawn.memory.tasks = [];
@@ -277,6 +280,16 @@ const roleSpawn = {
             cost += BODYPART_COST[parts[i]];
         }
         return cost;
+    },
+    checkSpawnCooldown(spawn) {
+        if (!spawn.memory.cooldown || spawn.memory.cooldown <= 0) {
+            spawn.memory.cooldown = 100;
+            return true;
+        }
+        if (!spawn.spawning) {
+            spawn.memory.cooldown --;
+        }
+        return false;
     }
 };
 
