@@ -19,6 +19,14 @@ const commands = {
             });
         }
         return "Scheduled"
+    },
+    spawnMinimalFeeder : function(spawn) {
+        const result = Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, MOVE], "fishbot.min-feeder", {memory: {role: "feeder"}});
+        if (result === OK) {
+            return "Spawning"
+        } else {
+            return "Error, code: " + result;
+        }
     }
 };
 
