@@ -283,7 +283,7 @@ const roleSpawn = {
     },
     checkSpawnCooldown(spawn) {
         if (!spawn.memory.cooldown || spawn.memory.cooldown <= 0) {
-            spawn.memory.cooldown = 100;
+            spawn.memory.cooldown = 30;
             return true;
         }
         if (!spawn.spawning) {
