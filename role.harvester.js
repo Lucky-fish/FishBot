@@ -8,6 +8,7 @@
  */
 const lookForSource = require("resource");
 const spawn = require("spawn");
+const utils = require("utils");
 
 module.exports = {
     run : function(creep) {
@@ -22,14 +23,20 @@ module.exports = {
         if(creep.harvest(source) === ERR_NOT_IN_RANGE) {
             creep.moveTo(source);
         } else {
-            const targets = creep.pos.findClosestByRange(FIND_STRUCTURES, {
+            const target = creep.pos.findClosestByRange(FIND_STRUCTURES, {
                 filter: (structure) => {
                     return (structure.structureType === STRUCTURE_CONTAINER || (structure.structureType === STRUCTURE_STORAGE && structure.my)) && structure.store[RESOURCE_ENERGY] < structure.storeCapacity;
                 }
             });
-            if(targets) {
-                if(creep.transfer(targets, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-                    creep.moveTo(targets);
+            if(target) {
+                if(creep.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+                    if (utils.distance(target.pos, creep.pos) > 5) {
+                        // maybe there is a construction site there.
+                        const constructSite = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES);
+                        creep.build(constructSite);
+                    } else {
+                        creep.moveTo(target);
+                    }
                 }
             }
         }
