@@ -56,6 +56,10 @@ const hauler = {
                 creep.memory.target = found[0].id;
             }
             const target = Game.getObjectById(creep.memory.target);
+            if (target.store[RESOURCE_ENERGY] <= creep.store.getFreeCapacity()) {
+                delete creep.memory.target;
+                return;
+            }
             if (creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(target);
             } else {
