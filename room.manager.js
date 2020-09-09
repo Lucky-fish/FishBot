@@ -62,7 +62,7 @@ module.exports = {
             if (!Game.rooms[value]) {
                 return true;
             } else {
-                return Game.rooms[value].controller && (Game.rooms[value].controller.my || Game.rooms[value].controller.reservation.username === "Death_fish");
+                return Game.rooms[value].controller && (Game.rooms[value].controller.my || (Game.rooms[value].controller.reservation && Game.rooms[value].controller.reservation.username === "Death_fish"));
             }
         });
     },
