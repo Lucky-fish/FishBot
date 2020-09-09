@@ -17,11 +17,12 @@ const roleFeeder = {
                         structure.structureType === STRUCTURE_TOWER) && structure.energy < structure.energyCapacity;
                 }
             });
+            const hasEnemy = creep.room.find(FIND_HOSTILE_CREEPS).length === 0 ? 1 : -1;
             targets.sort(function (a, b) {
                 if (a.structureType === STRUCTURE_TOWER) {
-                    return 1;
+                    return hasEnemy;
                 } else if (b.structureType === STRUCTURE_TOWER) {
-                    return -1;
+                    return -hasEnemy;
                 }
                 return utils.distance(a.pos, creep.pos) - utils.distance(b.pos, creep.pos);
             });
