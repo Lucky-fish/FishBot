@@ -169,10 +169,10 @@ const roleSpawn = {
         const energy = this.getAvailableEnergy(spawn) - this.getBodyCost([CARRY, MOVE]);
         const body = [CARRY, MOVE];
 
-        const unit = this.getBodyCost([WORK]);
+        const unit = this.getBodyCost([WORK, WORK, MOVE]);
 
         for (let i = 0; i < Math.floor(energy / unit); i++) {
-            body.push(WORK);
+            body.push(WORK, WORK, MOVE);
         }
 
         return body;
