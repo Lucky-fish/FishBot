@@ -92,7 +92,6 @@ module.exports = {
     randomRoom : function() {
         const ownRoom = this.getOwnRoom();
         const index = Math.floor(Math.random() * ownRoom.length);
-        console.log("index: " + index+ ", room: " + ownRoom[index])
         return ownRoom[index];
     }
 };

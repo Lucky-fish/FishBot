@@ -45,7 +45,7 @@ const miner = {
                             creep.move(RIGHT);
                             const route = Game.map.findRoute(creep.room, storage.room, {
                                 routeCallback(roomName) {
-                                    if (roomName == "E13N29") {
+                                    if (roomName === "E13N29") {
                                         return Infinity;
                                     }
                                     return 1;
@@ -53,6 +53,7 @@ const miner = {
                             });
                             if(route.length > 0) {
                                 const exit = creep.pos.findClosestByRange(route[0].exit);
+                                creep.cancelOrder("move");
                                 creep.moveTo(exit);
                             }
                         } else {
