@@ -53,7 +53,7 @@ const hauler = {
                             }
                         }
 
-                        return target.structureType == STRUCTURE_CONTAINER && target.store[RESOURCE_ENERGY] > creep.store.getFreeCapacity();
+                        return target.structureType == STRUCTURE_CONTAINER;
                     }
                 });
                 found.sort((a, b) => a.store[RESOURCE_ENERGY] - b.store[RESOURCE_ENERGY]);
