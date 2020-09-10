@@ -297,7 +297,7 @@ const roleSpawn = {
     },
     getHaulerCountNeeded : function(spawn) {
         const containers = roomManager.find(FIND_STRUCTURES, {filter : function(e) {
-            e.structureType == STRUCTURE_CONTAINER;
+            return e.structureType == STRUCTURE_CONTAINER;
             }})
 
         let count = 0;
@@ -309,7 +309,7 @@ const roleSpawn = {
     },
     getMostNeededContainer : function(spawn) {
         const containers = roomManager.find(FIND_STRUCTURES, {filter : function(e) {
-                e.structureType == STRUCTURE_CONTAINER;
+                return e.structureType == STRUCTURE_CONTAINER;
             }})
         if (!containers.length) {
             return undefined;
