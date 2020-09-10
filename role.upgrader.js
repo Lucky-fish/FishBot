@@ -9,7 +9,11 @@ const roleUpgrader = {
         commons.updateEnergy(creep);
 
         if (creep.memory.working) {
-            const controller = roomManager.getOwnController();
+            if (!creep.memory.targetRoom) {
+                creep.memory.targetRoom = roomManager.getUpgradeNeededRoom();
+            }
+
+            const controller = Game.rooms[creep.memory.targetRoom].getOwnController();
             if (creep.upgradeController(controller) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(controller);
             }
@@ -19,6 +23,7 @@ const roleUpgrader = {
                 }
             }
         } else {
+            delete creep.memory.targetRoom;
             lookForSource.harvest(creep);
         }
     }

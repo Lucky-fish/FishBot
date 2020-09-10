@@ -89,6 +89,26 @@ module.exports = {
             }
         }
     },
+    getUpgradeNeededRoom : function() {
+        const rooms = this.getOwnRoom();
+        const roomCounter = {};
+        for (let i in Game.creeps) {
+            const creep = Game.creeps[i];
+            if (creep.memory.targetRoom && creep.memory.role === "upgrader") {
+                let count = roomCounter[creep.memory.targetRoom];
+                if (!count) {
+                    count = 0;
+                }
+                count ++;
+                roomCounter[creep.memory.targetRoom] = count;
+            }
+        }
+
+        rooms.sort((a, b) => roomCounter[a] - roomCounter[b]);
+
+        return rooms[0];
+    }
+    ,
     randomRoom : function() {
         const ownRoom = this.getOwnRoom();
         const index = Math.floor(Math.random() * ownRoom.length);
