@@ -24,7 +24,7 @@ module.exports = {
                 creep.moveTo(invader);
             }
             exe = exe || result != ERR_NO_BODYPART;
-        } else {
+        }/* else {
             const hostileBuildings = creep.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES);
             if (hostileBuildings) {
                 let result = creep.rangedAttack(hostileBuildings);
@@ -38,7 +38,7 @@ module.exports = {
                 }
                 exe = exe || result != ERR_NO_BODYPART;
             }
-        }
+        }*/
 
         const damagedCreep = _.filter(Game.creeps, (creep) => creep.hits < creep.hitsMax);
         damagedCreep.sort((a, b) => a.hits - b.hits);
