@@ -13,7 +13,7 @@ const roleUpgrader = {
                 creep.memory.targetRoom = roomManager.getUpgradeNeededRoom();
             }
 
-            const controller = Game.rooms[creep.memory.targetRoom].getOwnController();
+            const controller = Game.rooms[creep.memory.targetRoom].controller;
             if (creep.upgradeController(controller) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(controller);
             }

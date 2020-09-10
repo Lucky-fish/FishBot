@@ -90,7 +90,7 @@ module.exports = {
         }
     },
     getUpgradeNeededRoom : function() {
-        const rooms = this.getOwnRoom();
+        const rooms = this.getOwnRoom().filter((v, a, b) => Game.rooms[v] && Game.rooms[v].controller.my);
         const roomCounter = {};
         for (let i in Game.creeps) {
             const creep = Game.creeps[i];
