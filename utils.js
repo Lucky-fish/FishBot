@@ -11,7 +11,7 @@ module.exports = {
     distance : function(pos1, pos2) {
         if ((pos1 instanceof RoomPosition) && (pos2 instanceof RoomPosition)) {
             if (pos1.roomName !== pos2.roomName) {
-                return Infinity;
+                return Game.map.getRoomLinearDistance(pos1.roomName, pos2.roomName) * 25;
             }
             
             return Math.sqrt(Math.pow(pos1.x - pos2.x, 2) + Math.pow(pos1.y - pos2.y, 2));

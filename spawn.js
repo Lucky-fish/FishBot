@@ -19,6 +19,7 @@ const spawnConfig = {
 };
 
 const roomManager = require("room.manager");
+const utils = require("utils");
 
 const roleSpawn = {
     run: function (spawn) {
@@ -112,8 +113,8 @@ const roleSpawn = {
                     }
                 }
 
-                if (haulerLength < containerLength) {
-                    const result = spawn.spawnCreep(this.getFeederBody(spawn), "fishbot.hauler-" + Math.ceil(Math.random() * 10000), {memory: {role: "hauler"}});
+                if (haulerLength < this.getHaulerCountNeeded(spawn)) {
+                    const result = spawn.spawnCreep(this.getFeederBody(spawn), "fishbot.hauler-" + Math.ceil(Math.random() * 10000), {memory: {role: "hauler", target : this.getMostNeededContainer(spawn)}});
                     if (result === OK) {
                         spawned = "hauler";
                     }
@@ -282,7 +283,7 @@ const roleSpawn = {
         }
         return cost;
     },
-    checkSpawnCooldown(spawn) {
+    checkSpawnCooldown : function(spawn) {
         if (!spawn.memory.cooldown || spawn.memory.cooldown <= 0) {
             if (spawn.spawning) {
                 spawn.memory.cooldown = 30;
@@ -293,6 +294,43 @@ const roleSpawn = {
             spawn.memory.cooldown --;
         }
         return false;
+    },
+    getHaulerCountNeeded : function(spawn) {
+        const containers = roomManager.find(FIND_STRUCTURES, {filter : function(e) {
+            e.structureType == STRUCTURE_CONTAINER;
+            }})
+
+        let count = 0;
+        for (let i in containers) {
+            const container = containers[i];
+            count += Math.ceil(utils.distance(container.pos, spawn.pos) / 10);
+        }
+        return count;
+    },
+    getMostNeededContainer : function(spawn) {
+        const containers = roomManager.find(FIND_STRUCTURES, {filter : function(e) {
+                e.structureType == STRUCTURE_CONTAINER;
+            }})
+        if (!containers.length) {
+            return undefined;
+        }
+        const containerCounter = {};
+
+        for (let i in containers) {
+            const container = containers[i];
+            containerCounter[container.id] = Math.ceil(utils.distance(container.pos, spawn.pos) / 10) - _.filter(Game.creeps, (creep) => creep.memory.role === "hauler" && creep.memory.target === container.id).length;
+        }
+
+        let most = undefined;
+        let mostAmount = -1;
+        for (let i in containerCounter) {
+            if (containerCounter[i] >= mostAmount) {
+                most = i;
+                mostAmount = containerCounter[i];
+            }
+        }
+
+        return most;
     }
 };
 
