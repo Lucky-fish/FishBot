@@ -104,7 +104,7 @@ module.exports = {
             }
         }
 
-        rooms.sort((a, b) => roomCounter[a] - roomCounter[b]);
+        rooms.sort((a, b) => roomCounter[b] - roomCounter[a]);
 
         return rooms[0];
     }
