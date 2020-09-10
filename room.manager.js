@@ -105,6 +105,7 @@ module.exports = {
         }
 
         rooms.sort((a, b) => roomCounter[b] - roomCounter[a]);
+        console.log(JSON.stringify(rooms))
 
         return rooms[0];
     }
