@@ -48,7 +48,7 @@ const hauler = {
                     filter: function (target) {
                         const haulers = _.filter(Game.creeps, (creepw) => creepw.memory.role === "hauler" && creepw !== creep);
                         for (let i in haulers) {
-                            if (haulers[i].target === target.id) {
+                            if (haulers[i].memory.target === target.id) {
                                 return false;
                             }
                         }

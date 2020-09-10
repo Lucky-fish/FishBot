@@ -112,7 +112,7 @@ const roleSpawn = {
                     }
                 }
 
-                if (haulerLength < Memory.spawnConfig.hauler) {
+                if (haulerLength < containerLength) {
                     const result = spawn.spawnCreep(this.getFeederBody(spawn), "fishbot.hauler-" + Math.ceil(Math.random() * 10000), {memory: {role: "hauler"}});
                     if (result === OK) {
                         spawned = "hauler";
