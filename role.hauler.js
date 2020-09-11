@@ -58,13 +58,15 @@ const hauler = {
                         }
                     });
                     found.sort((a, b) => a.store[RESOURCE_ENERGY] - b.store[RESOURCE_ENERGY]);
+
+                    creep.memory.scanCooldown = 20;
                     if (!found.length) {
                         return;
                     }
                     creep.memory.target = found[0].id;
-                    creep.memory.scanCooldown = 20;
                 } else {
                     creep.memory.scanCooldown --;
+                    return;
                 }
             }
             const target = Game.getObjectById(creep.memory.target);
