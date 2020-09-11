@@ -44,23 +44,28 @@ const hauler = {
             }
         } else {
             if (!creep.memory.target) {
-                const found = roomManager.find(FIND_STRUCTURES, {
-                    filter: function (target) {
-                        const haulers = _.filter(Game.creeps, (creepw) => creepw.memory.role === "hauler" && creepw !== creep);
-                        for (let i in haulers) {
-                            if (haulers[i].memory.target === target.id) {
-                                return false;
+                if ((!creep.memory.scanCooldown) || creep.memory.scanCooldown <= 0) {
+                    const found = roomManager.find(FIND_STRUCTURES, {
+                        filter: function (target) {
+                            const haulers = _.filter(Game.creeps, (creepw) => creepw.memory.role === "hauler" && creepw !== creep);
+                            for (let i in haulers) {
+                                if (haulers[i].memory.target === target.id) {
+                                    return false;
+                                }
                             }
-                        }
 
-                        return target.structureType == STRUCTURE_CONTAINER;
+                            return target.structureType == STRUCTURE_CONTAINER;
+                        }
+                    });
+                    found.sort((a, b) => a.store[RESOURCE_ENERGY] - b.store[RESOURCE_ENERGY]);
+                    if (!found.length) {
+                        return;
                     }
-                });
-                found.sort((a, b) => a.store[RESOURCE_ENERGY] - b.store[RESOURCE_ENERGY]);
-                if (!found.length) {
-                    return;
+                    creep.memory.target = found[0].id;
+                    creep.memory.scanCooldown = 20;
+                } else {
+                    creep.memory.scanCooldown --;
                 }
-                creep.memory.target = found[0].id;
             }
             const target = Game.getObjectById(creep.memory.target);
             if (!target) {
