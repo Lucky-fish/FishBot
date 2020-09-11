@@ -33,7 +33,18 @@ module.exports = {
                     if (utils.distance(target.pos, creep.pos) > 5) {
                         // maybe there is a construction site there.
                         const constructSite = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES);
-                        creep.build(constructSite);
+                        if (constructSite) {
+                            creep.build(constructSite);
+                        } else {
+                            const container = creep.pos.findClosestByRange(FIND_STRUCTURES, {
+                                filter: (structure) => {
+                                    return structure.structureType === STRUCTURE_CONTAINER;
+                                }
+                            })
+                            if (container) {
+                                creep.repair(container);
+                            }
+                        }
                     } else {
                         creep.moveTo(target);
                     }
