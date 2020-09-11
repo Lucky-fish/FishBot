@@ -59,6 +59,13 @@ module.exports.loop = function () {
 
     for(let name in Game.creeps) {
         const creep = Game.creeps[name];
+        const found = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES, {filter: function(v) {
+                return v.amount >= 10;
+            }});
+        if (found) {
+            creep.pickup(found);
+        }
+
         if(creep.memory.role === 'harvester') {
             roleHarvester.run(creep);
         } else if(creep.memory.role === 'upgrader') {
