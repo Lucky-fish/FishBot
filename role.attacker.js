@@ -11,6 +11,11 @@ const roomManager = require("room.manager");
 module.exports = {
     run : function(creep) {
         let exe = false;
+        if (creep.memory.goalRoom) {
+            exe = true;
+            creep.moveTo(new RoomPosition(14, 14, creep.memory.goalRoom));
+        }
+
         const invader = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS, {
             filter : function(creep) {
                 return roomManager.getOwnRoom().indexOf(creep.room.name) !== -1 || creep.owner.username === "Invader"
@@ -45,6 +50,8 @@ module.exports = {
                     creep.moveTo(hostileBuildings);
                 }
                 exe = exe || result != ERR_NO_BODYPART;
+            } else {
+                delete creep.memory.goalRoom;
             }
         }
 

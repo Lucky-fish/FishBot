@@ -27,6 +27,14 @@ const commands = {
         } else {
             return "Error, code: " + result;
         }
+    },
+    attack : function(room) {
+        for (let i in Game.creeps) {
+            const creep = Game.creeps[i];
+            if (creep.memory.role === "attacker") {
+                creep.memory.goalRoom = room;
+            }
+        }
     }
 };
 
