@@ -11,7 +11,11 @@ const roomManager = require("room.manager");
 module.exports = {
     run : function(creep) {
         let exe = false;
-        const invader = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+        const invader = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS, {
+            filter : function(creep) {
+                return roomManager.getOwnRoom().indexOf(creep.room.name) !== -1 || creep.owner.username === "Invader"
+            }
+        });
         if (invader) {
             let result = creep.rangedAttack(invader);
             if (result === ERR_NOT_IN_RANGE) {
@@ -24,8 +28,12 @@ module.exports = {
                 creep.moveTo(invader);
             }
             exe = exe || result != ERR_NO_BODYPART;
-        }/* else {
-            const hostileBuildings = creep.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES);
+        } else {
+            const hostileBuildings = creep.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES, {
+                filter : function(target) {
+                    return target.owner.username === "Invader";
+                }
+            });
             if (hostileBuildings) {
                 let result = creep.rangedAttack(hostileBuildings);
                 if (result === ERR_NOT_IN_RANGE) {
@@ -38,7 +46,7 @@ module.exports = {
                 }
                 exe = exe || result != ERR_NO_BODYPART;
             }
-        }*/
+        }
 
         const damagedCreep = _.filter(Game.creeps, (creep) => creep.hits < creep.hitsMax);
         damagedCreep.sort((a, b) => a.hits - b.hits);
