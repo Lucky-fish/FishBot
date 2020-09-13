@@ -11,10 +11,6 @@ const roomManager = require("room.manager");
 module.exports = {
     run : function(creep) {
         let exe = false;
-        if (creep.memory.goalRoom) {
-            exe = true;
-            creep.moveTo(new RoomPosition(14, 14, creep.memory.goalRoom));
-        }
 
         const invader = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS, {
             filter : function(creep) {
@@ -53,6 +49,11 @@ module.exports = {
             } else {
                 delete creep.memory.goalRoom;
             }
+        }
+
+        if ((!exe) && creep.memory.goalRoom) {
+            exe = true;
+            creep.moveTo(new RoomPosition(14, 14, creep.memory.goalRoom));
         }
 
         const damagedCreep = _.filter(Game.creeps, (creep) => creep.hits < creep.hitsMax);
