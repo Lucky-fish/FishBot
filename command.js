@@ -32,7 +32,7 @@ const commands = {
         for (let i in Game.creeps) {
             const creep = Game.creeps[i];
             if (creep.memory.role === "attacker") {
-                creep.memory.goalRoom = room;
+                creep.memory.room = room;
             }
         }
     }

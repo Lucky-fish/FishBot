@@ -51,11 +51,6 @@ module.exports = {
             }
         }
 
-        if ((!exe) && creep.memory.goalRoom) {
-            exe = true;
-            creep.moveTo(new RoomPosition(14, 14, creep.memory.goalRoom));
-        }
-
         const damagedCreep = _.filter(Game.creeps, (creep) => creep.hits < creep.hitsMax);
         damagedCreep.sort((a, b) => a.hits - b.hits);
 
@@ -77,7 +72,7 @@ module.exports = {
                 }
             }
 
-            if ((Math.abs(creep.pos.x - x) < 2 && Math.abs(creep.pos.y - y) < 2) || (!success)) {
+            if ((Math.abs(creep.pos.x - x) < 2 && Math.abs(creep.pos.y - y) < 2 && creep.room.name === room) || (!success)) {
                 creep.memory.targetX = Math.floor(Math.random() * 45) + 2;
                 creep.memory.targetY = Math.floor(Math.random() * 45) + 2;
                 creep.memory.room = roomManager.randomRoom();
