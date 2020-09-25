@@ -13,6 +13,7 @@ const utils = require("utils");
 module.exports = {
     run : function(creep) {
         if (creep.ticksToLive < 50 && (!creep.memory.spawnScheduled)) {
+            console.log("dying memory: " + JSON.stringify(creep.memory));
             spawn.putSpawnTask(JSON.parse(JSON.stringify(creep.memory)), function(spawnIn) {
                 return spawn.getHarvesterBody(spawnIn);
             });
