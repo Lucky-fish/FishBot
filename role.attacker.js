@@ -57,7 +57,6 @@ module.exports = {
         if (result === ERR_NOT_IN_RANGE) {
             creep.moveTo(damagedCreep[0]);
         }
-        exe = result != ERR_NO_BODYPART;
         
         if (!exe) {
             // move randomly
