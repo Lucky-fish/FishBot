@@ -42,7 +42,7 @@ const claimer = {
                 delete creep.memory.target;
                 delete creep.memory.lastRoom;
             }
-            if (controller.owner && controller.owner.username !== "Death_fish") {
+            if ((controller.owner && controller.owner.username !== "Death_fish") || (controller.reservation && controller.reservation.username !== "Death_fish")) {
                 if (creep.attackController(controller) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(controller);
                 }
