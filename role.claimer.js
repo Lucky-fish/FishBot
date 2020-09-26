@@ -12,7 +12,7 @@ const claimer = {
             filter : function(target) {
                 return target.owner.username === "Invader";
             }
-        })) {
+        }).length) {
             command.attack(creep.room.name);
         }
 
