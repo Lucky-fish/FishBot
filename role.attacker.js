@@ -53,10 +53,11 @@ module.exports = {
 
         const damagedCreep = _.filter(Game.creeps, (creep) => creep.hits < creep.hitsMax);
         damagedCreep.sort((a, b) => a.hits - b.hits);
-
-        if (creep.heal(damagedCreep[0]) === ERR_NOT_IN_RANGE) {
+        let result = creep.heal(damagedCreep[0]);
+        if (result === ERR_NOT_IN_RANGE) {
             creep.moveTo(damagedCreep[0]);
         }
+        exe = result != ERR_NO_BODYPART;
         
         if (!exe) {
             // move randomly

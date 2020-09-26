@@ -1,10 +1,19 @@
 const roomManager = require("room.manager");
+const command = require("command");
 
 const claimer = {
     run : function(creep) {
         if (creep.memory.finished) {
             creep.suicide();
             return;
+        }
+
+        if (creep.room.find(FIND_HOSTILE_STRUCTURES, {
+            filter : function(target) {
+                return target.owner.username === "Invader";
+            }
+        })) {
+            command.attack(creep.room.name);
         }
 
         if (!creep.memory.targetRoomName) {
