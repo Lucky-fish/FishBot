@@ -61,7 +61,8 @@ module.exports = {
         
         if (!exe) {
             // attack another player's base
-            if (Memory.attackRoom) {
+            const attackerLength = _.filter(Game.creeps, (creep) => creep.memory.role === "attacker").length;
+            if (Memory.attackRoom && attackerLength >= Memory.spawnConfig.attacker) {
                 if (creep.room.name !== Memory.attackRoom) {
                     creep.memory.room = Memory.attackRoom;
                 } else {
