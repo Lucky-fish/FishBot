@@ -59,6 +59,49 @@ module.exports = {
         }
         
         if (!exe) {
+            // attack another player's base
+            if (Memory.attackRoom) {
+                if (creep.room.name !== Memory.attackRoom) {
+                    creep.memory.room = Memory.attackRoom;
+                } else {
+                    // attack their spawn first.
+                    const spawns = creep.room.find(FIND_HOSTILE_STRUCTURES, {
+                        filter : function(target) {
+                            return target.structureType === STRUCTURE_SPAWN && target.owner.username === Memory.attackTarget;
+                        }
+                    });
+                    let attackTarget;
+                    if (spawns.length) {
+                        attackTarget = spawns[0];
+                    } else {
+                        const storages = creep.room.find(FIND_HOSTILE_STRUCTURES, {
+                            filter : function(target) {
+                                return target.structureType === STRUCTURE_STORAGE && target.owner.username === Memory.attackTarget;
+                            }
+                        });
+                        attackTarget = storages[0];
+                    }
+
+                    creep.rangedAttack(attackTarget);
+                    const result = creep.attack(attackTarget);
+                    if (result === ERR_NOT_IN_RANGE) {
+                        const moveResult = creep.moveTo(attackTarget);
+                        if (moveResult === ERR_NO_PATH || moveResult === ERR_NOT_FOUND) {
+                            // find closes rampart or wall to attack
+                            const a = creep.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES, {
+                                filter : function(target) {
+                                    return target.structureType === STRUCTURE_RAMPART && target.owner.username === Memory.attackTarget;
+                                }
+                            });
+                            creep.rangedAttack(a);
+                            creep.attack(a);
+                        }
+                    }
+
+                    return;
+                }
+            }
+
             // move randomly
             const x = creep.memory.targetX;
             const y = creep.memory.targetY;

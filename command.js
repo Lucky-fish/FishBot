@@ -35,6 +35,10 @@ const commands = {
                 creep.memory.room = room;
             }
         }
+    },
+    attackPlayer : function(room, playerName) {
+        Memory.attackTarget = playerName;
+        Memory.attackRoom = room;
     }
 };
 
