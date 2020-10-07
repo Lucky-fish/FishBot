@@ -8,6 +8,7 @@
  */
 
 const roomManager = require("room.manager");
+const utils = require("utils");
 module.exports = {
     run : function(creep) {
         let exe = false;
@@ -66,6 +67,18 @@ module.exports = {
                 } else {
                     // attack their spawn first.
                     creep.notifyWhenAttacked(false);
+
+                    const a = creep.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES, {
+                        filter : function(target) {
+                            return target.structureType === STRUCTURE_RAMPART && target.owner.username === Memory.attackTarget;
+                        }
+                    });
+                    if (utils.distance(creep.pos, a.pos) <= 1.2) {
+                        creep.rangedAttack(a);
+                        creep.attack(a);
+                        return;
+                    }
+
                     const spawns = creep.room.find(FIND_HOSTILE_STRUCTURES, {
                         filter : function(target) {
                             return target.structureType === STRUCTURE_SPAWN && target.owner.username === Memory.attackTarget;
