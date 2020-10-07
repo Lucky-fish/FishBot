@@ -73,7 +73,7 @@ module.exports = {
                             return target.structureType === STRUCTURE_RAMPART && target.owner.username === Memory.attackTarget;
                         }
                     });
-                    if (utils.distance(creep.pos, a.pos) <= 1.2) {
+                    if (utils.distance(creep.pos, a.pos) <= 2) {
                         creep.rangedAttack(a);
                         creep.attack(a);
                         return;
