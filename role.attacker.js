@@ -65,6 +65,7 @@ module.exports = {
                     creep.memory.room = Memory.attackRoom;
                 } else {
                     // attack their spawn first.
+                    creep.notifyWhenAttacked(false);
                     const spawns = creep.room.find(FIND_HOSTILE_STRUCTURES, {
                         filter : function(target) {
                             return target.structureType === STRUCTURE_SPAWN && target.owner.username === Memory.attackTarget;
@@ -79,7 +80,22 @@ module.exports = {
                                 return target.structureType === STRUCTURE_STORAGE && target.owner.username === Memory.attackTarget;
                             }
                         });
-                        attackTarget = storages[0];
+                        if (!storages.length) {
+                            const towers = creep.room.find(FIND_HOSTILE_STRUCTURES, {
+                                filter : function(target) {
+                                    return target.structureType === STRUCTURE_TOWER && target.owner.username === Memory.attackTarget;
+                                }
+                            });
+                            if (towers.length) {
+                                attackTarget = towers[0];
+                            } else {
+                                require("command").claim(Memory.attackRoom);
+                                delete Memory.attackTarget;
+                                delete Memory.attackRoom;
+                            }
+                        } else {
+                            attackTarget = storages[0];
+                        }
                     }
 
                     creep.rangedAttack(attackTarget);
