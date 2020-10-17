@@ -1,6 +1,7 @@
 const commons = require("commons");
 const roomManager = require("room.manager");
 const utils = require("utils");
+const roleUpgrader = require('role.upgrader');
 
 const hauler = {
     run : function(creep) {
