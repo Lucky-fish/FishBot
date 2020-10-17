@@ -169,8 +169,8 @@ const roleSpawn = {
         return body;
     },
     getHarvesterBody: function (spawn) {
-        const energy = this.getAvailableEnergy(spawn) - this.getBodyCost([CARRY, MOVE]);
-        const body = [CARRY, MOVE];
+        const energy = this.getAvailableEnergy(spawn) - this.getBodyCost([WORK, CARRY, MOVE]);
+        const body = [WORK, CARRY, MOVE];
 
         const unit = this.getBodyCost([WORK, WORK, MOVE]);
 
